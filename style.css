@@ -1,0 +1,36 @@
+:root {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+#svg-container {
+  width: 128px;
+  height: 128px;
+  border: solid 1px #666;
+}
+
+#container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+#controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+#output {
+  margin-left: 0.5rem;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  text-align: center;
+}
