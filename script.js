@@ -144,7 +144,17 @@ document.addEventListener(
       const svgData = inputTextArea.textContent;
       navigator.clipboard.writeText(svgData).then(
         () => {
-          console.log("SVG source copied to clipboard");
+          // change button text temporarily, keep width the same to avoid layout shift
+          const previousText = copyButton.textContent;
+          const previousWidth = copyButton.clientWidth;
+          copyButton.style.width = previousWidth + "px";
+          copyButton.textContent = "Copied!";
+          copyButton.disabled = true;
+          setTimeout(() => {
+            copyButton.textContent = previousText;
+            copyButton.disabled = false;
+            copyButton.style.width = "";
+          }, 1000);
         },
         (err) => {
           console.error("Error copying SVG source to clipboard", err);
