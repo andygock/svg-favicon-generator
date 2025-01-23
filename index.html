@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SVG Favicon Generator</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link id="favicon" rel="icon" type="image/svg+xml" href="favicon.svg" />
   </head>
   <body>
     <div class="center">
@@ -14,7 +14,7 @@
         <div id="container">
           <div id="controls">
             <div>
-              <label for="input">Content:</label>
+              <label for="input">Content</label>
               <input
                 type="text"
                 id="input"
@@ -23,40 +23,40 @@
               />
             </div>
             <div>
-              <label for="font-size">Font Size:</label>
+              <label for="font-size">Font Size</label>
               <input
                 type="range"
                 id="font-size"
                 min="72"
                 max="200"
-                value="128"
+                value="100"
                 step="1"
               />
             </div>
             <div>
-              <label for="x">X:</label>
+              <label for="x">X</label>
               <input
                 type="range"
                 id="x"
                 min="0"
-                max="100"
-                value="50"
+                max="128"
+                value="64"
                 step="1"
               />
             </div>
             <div>
-              <label for="y">Y:</label>
+              <label for="y">Y</label>
               <input
                 type="range"
                 id="y"
                 min="0"
-                max="100"
-                value="70"
+                max="128"
+                value="74"
                 step="1"
               />
             </div>
             <div>
-              <label for="font-family">Font Family:</label>
+              <label for="font-family">Font Family</label>
               <select id="font-family">
                 <option value="sans-serif">Sans-serif</option>
                 <option value="serif">Serif</option>
@@ -64,15 +64,26 @@
               </select>
             </div>
             <div>
-              <label for="font-weight">Bold:</label>
-              <input type="checkbox" id="font-weight" />
-            </div>
-            <div>
               <label for="fill">Fill</label>
               <input type="color" id="fill" value="#000000" />
             </div>
             <div>
-              <label for="background">Background</label>
+              <label for="font-weight-bold">Bold</label>
+              <input type="checkbox" id="font-weight-bold" />
+            </div>
+            <div>
+              <label for="use-background">Use Background</label>
+              <input type="checkbox" id="use-background" />
+            </div>
+            <div class="background-control">
+              <label for="background-shape">Background Shape</label>
+              <select id="background-shape">
+                <option value="rect">Rect</option>
+                <option value="circle">Circle</option>
+              </select>
+            </div>
+            <div class="background-control">
+              <label for="background">Background Color</label>
               <input type="color" id="background" value="#ffffff" />
             </div>
           </div>
@@ -87,6 +98,7 @@
                 align="center"
               >
                 <rect x="0" y="0" width="128" height="128" fill="#ffffff" />
+                <circle cx="64" cy="64" r="64" fill="#ffffff" />
                 <text
                   x="64"
                   y="70"
@@ -110,6 +122,11 @@
         </div>
       </div>
     </div>
+    <footer>
+      <p>
+       &copy; <a href="https://gock.net/"">Andy Gock</a> | <a href="https://github.com/andygock/svg-favicon-generator/">GitHub</a>
+      </p>
+    </footer>
     <script src="script.js"></script>
   </body>
 </html>

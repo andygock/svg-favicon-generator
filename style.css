@@ -1,11 +1,18 @@
 :root {
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  --border-color: #666;
+  --button-bg-color: #4caf50;
+  --button-hover-bg-color: #45a049;
+  --input-border-color: #ccc;
+  --border-radius: 4px;
+  --padding: 8px;
+  --margin: 4px;
 }
 
 #svg-container {
   width: 128px;
   height: 128px;
-  border: solid 1px #666;
+  border: solid 1px var(--border-color);
 }
 
 #container {
@@ -21,8 +28,18 @@
   align-items: flex-end;
 }
 
+#controls > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#controls > div > * {
+  margin: var(--margin);
+}
+
 #output {
-  margin-left: 0.5rem;
+  margin-left: var(--margin);
 }
 
 .center {
@@ -33,4 +50,55 @@
 
 h1 {
   text-align: center;
+}
+
+button {
+  background-color: var(--button-bg-color);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+}
+button:hover {
+  background-color: var(--button-hover-bg-color);
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  padding: var(--padding);
+  margin: var(--margin) 0;
+  box-sizing: border-box;
+  border: 1px solid var(--input-border-color);
+  border-radius: var(--border-radius);
+}
+
+input[type="color"] {
+  padding: 0;
+  margin: var(--margin) 0;
+  border: none;
+  background: none;
+}
+
+input[type="checkbox"] {
+  margin: var(--margin) 0;
+}
+
+label {
+  margin: var(--margin) 0;
+}
+
+footer {
+  margin-top: 20px;
+  text-align: right;
+}
+
+a {
+  text-decoration: none;
 }
