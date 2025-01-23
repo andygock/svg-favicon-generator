@@ -6,6 +6,12 @@
     <title>SVG Favicon Generator</title>
     <link rel="stylesheet" href="style.css" />
     <link id="favicon" rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div class="center">
@@ -58,9 +64,9 @@
             <div>
               <label for="font-family">Font Family</label>
               <select id="font-family">
-                <option value="sans-serif">Sans-serif</option>
-                <option value="serif">Serif</option>
-                <option value="monospace">Monospace</option>
+                <option value="sans-serif">sans-serif</option>
+                <option value="serif">serif</option>
+                <option value="monospace">monospace</option>
               </select>
             </div>
             <div>
@@ -123,9 +129,10 @@
       </div>
     </div>
     <footer>
-      <p>
-       &copy; <a href="https://gock.net/"">Andy Gock</a> | <a href="https://github.com/andygock/svg-favicon-generator/">GitHub</a>
-      </p>
+      <div>
+        &copy; <a href="https://gock.net/">Andy Gock</a> |
+        <a href="https://github.com/andygock/svg-favicon-generator/">GitHub</a>
+      </div>
     </footer>
     <script src="script.js"></script>
   </body>

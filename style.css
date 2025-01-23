@@ -1,5 +1,7 @@
 :root {
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
   --border-color: #666;
   --button-bg-color: #4caf50;
   --button-hover-bg-color: #45a049;
@@ -7,6 +9,17 @@
   --border-radius: 4px;
   --padding: 8px;
   --margin: 4px;
+}
+
+select option {
+  font-family: "Roboto", sans-serif;
+}
+
+textarea {
+  font-family: "JetBrains Mono", monospace;
+  font-optical-sizing: auto;
+  font-style: normal;
+  margin-top: var(--margin);
 }
 
 #svg-container {
@@ -88,6 +101,11 @@ input[type="color"] {
 
 input[type="checkbox"] {
   margin: var(--margin) 0;
+}
+
+input#input {
+  font-size: large;
+  width: 10ch;
 }
 
 label {
