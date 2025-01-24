@@ -2,7 +2,7 @@
 
 This is a Vanilla JS web application that allows users to create and customize SVG favicons. Users can input text, adjust font size, position, font family, fill color, and background shape and color. The generated SVG can be downloaded or copied to the clipboard.
 
-![svg-favicon-generator](https://github.com/user-attachments/assets/96095860-3759-4d29-94a6-de4fb7751328)
+![svg-favicon-generator](./screenshot.png)
 
 ## Features
 
