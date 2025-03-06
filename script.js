@@ -18,14 +18,14 @@ document.addEventListener(
     const inputFill = document.getElementById("fill");
     const inputBackground = document.getElementById("background");
     const inputFontFamily = document.getElementById("font-family");
-    const inputTextArea = document.getElementById("output-text");
+    const svgTextArea = document.getElementById("output-svg");
     const inputBackgroundShape = document.getElementById("background-shape");
 
     // checkboxes
     const inputBold = document.getElementById("font-weight-bold");
     const inputUseBackground = document.getElementById("use-background");
 
-    function updateSVG() {
+    function updateSvg() {
       inputSvgText.textContent = inputText.value;
       inputSvgText.setAttribute("font-size", inputFontSize.value);
       inputSvgText.setAttribute("x", inputX.value);
@@ -90,12 +90,15 @@ document.addEventListener(
         })
         .join("");
 
-      inputTextArea.textContent = svgContent;
+      svgTextArea.textContent = svgContent;
+      updateLinkTextArea(svgTextArea.textContent);
 
-      // base64 encode the svg text content and set as favicon
-      const svgDataEncoded = btoa(unescape(encodeURIComponent(svgContent)));
-      const svgDataUri = "data:image/svg+xml;base64," + svgDataEncoded;
-      favicon.href = svgDataUri;
+      // set favicon for this page
+      const encodedSvg = encodeURIComponent(svgContent)
+        .replace(/'/g, "%27")
+        .replace(/"/g, "%22");
+      const dataUrl = `data:image/svg+xml,${encodedSvg}`;
+      favicon.href = dataUrl;
     } // updateSVG()
 
     function updateBackgroundControls() {
@@ -106,27 +109,81 @@ document.addEventListener(
     } // updateBackgroundControls()
 
     // event listeners
-    inputText.addEventListener("input", updateSVG);
-    inputFontSize.addEventListener("input", updateSVG);
-    inputX.addEventListener("input", updateSVG);
-    inputY.addEventListener("input", updateSVG);
-    inputFontFamily.addEventListener("input", updateSVG);
-    inputFill.addEventListener("input", updateSVG);
-    inputBackground.addEventListener("input", updateSVG);
-    inputBold.addEventListener("input", updateSVG);
+    inputText.addEventListener("input", updateSvg);
+    inputFontSize.addEventListener("input", updateSvg);
+    inputX.addEventListener("input", updateSvg);
+    inputY.addEventListener("input", updateSvg);
+    inputFontFamily.addEventListener("input", updateSvg);
+    inputFill.addEventListener("input", updateSvg);
+    inputBackground.addEventListener("input", updateSvg);
+    inputBold.addEventListener("input", updateSvg);
     inputUseBackground.addEventListener("input", () => {
       updateBackgroundControls();
-      updateSVG();
+      updateSvg();
     });
-    inputBackgroundShape.addEventListener("input", updateSVG);
+    inputBackgroundShape.addEventListener("input", updateSvg);
 
-    updateSVG();
+    updateSvg();
     updateBackgroundControls();
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(
+        () => {
+          console.log("Text copied to clipboard successfully!");
+        },
+        (err) => {
+          console.error("Error copying text to clipboard", err);
+        }
+      );
+    }
+
+    function createInlineFavicon(svgString) {
+      // Encode the SVG string into a data URL
+      const encodedSvg = encodeURIComponent(svgString)
+        .replace(/'/g, "%27")
+        .replace(/"/g, "%22");
+
+      const dataUrl = `data:image/svg+xml,${encodedSvg}`;
+
+      // Return the favicon link element as a string
+      return `<link id="favicon" rel="icon" type="image/svg+xml" href="${dataUrl}" />`;
+    }
+
+    function updateLinkTextArea(svgString) {
+      const svgData = svgString;
+      const inlineFavicon = createInlineFavicon(svgData);
+      const outputLink = document.getElementById("output-link");
+      outputLink.textContent = inlineFavicon;
+    }
+
+    function setupCopyButton(buttonId, getText) {
+      const button = document.getElementById(buttonId);
+      button.addEventListener("click", () => {
+        const text = getText();
+        copyToClipboard(text);
+        const previousText = button.textContent;
+        const previousWidth = button.clientWidth;
+        button.style.width = previousWidth + "px";
+        button.textContent = "Copied!";
+        button.disabled = true;
+        setTimeout(() => {
+          button.textContent = previousText;
+          button.disabled = false;
+          button.style.width = "";
+        }, 1000);
+      });
+    }
+
+    setupCopyButton("copy-svg", () => svgTextArea.textContent);
+    setupCopyButton("copy-link", () =>
+      createInlineFavicon(svgTextArea.textContent)
+    );
 
     // download button
     const downloadButton = document.getElementById("download");
     downloadButton.addEventListener("click", () => {
-      const svgBlob = new Blob([inputTextArea.textContent], {
+      const svgContent = document.getElementById("output-svg").textContent;
+      const svgBlob = new Blob([svgContent], {
         type: "image/svg+xml;charset=utf-8",
       });
       const svgUrl = URL.createObjectURL(svgBlob);
@@ -136,30 +193,6 @@ document.addEventListener(
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);
-    });
-
-    // copy svg source button
-    const copyButton = document.getElementById("copy");
-    copyButton.addEventListener("click", () => {
-      const svgData = inputTextArea.textContent;
-      navigator.clipboard.writeText(svgData).then(
-        () => {
-          // change button text temporarily, keep width the same to avoid layout shift
-          const previousText = copyButton.textContent;
-          const previousWidth = copyButton.clientWidth;
-          copyButton.style.width = previousWidth + "px";
-          copyButton.textContent = "Copied!";
-          copyButton.disabled = true;
-          setTimeout(() => {
-            copyButton.textContent = previousText;
-            copyButton.disabled = false;
-            copyButton.style.width = "";
-          }, 1000);
-        },
-        (err) => {
-          console.error("Error copying SVG source to clipboard", err);
-        }
-      );
     });
   })()
 );
