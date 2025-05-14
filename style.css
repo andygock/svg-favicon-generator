@@ -1,3 +1,10 @@
+/* quick reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 :root {
   font-family: "Roboto", sans-serif;
   font-optical-sizing: auto;
@@ -9,6 +16,9 @@
   --border-radius: 4px;
   --padding: 8px;
   --margin: 4px;
+}
+html {
+  padding: 1rem;
 }
 
 select option {
@@ -61,8 +71,20 @@ textarea {
   align-items: center;
 }
 
-h1 {
-  text-align: center;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: bold;
+  margin: var(--margin) 0;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 button {

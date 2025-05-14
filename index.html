@@ -16,7 +16,10 @@
   <body>
     <div class="center">
       <div>
-        <h1>SVG Favicon Generator</h1>
+        <h1 class="center">SVG Favicon Generator</h1>
+        <div class="subheading center">
+          Use emojis, unicode symbols, or text to create favicons.
+        </div>
         <div id="container">
           <div id="controls">
             <div>
@@ -128,6 +131,57 @@
             <div>
               <button id="copy-link">Copy Link Code</button>
             </div>
+            <h2>Download PNGs</h2>
+            <div class="download-pngs">
+              <button
+                id="download-32x32"
+                data-size="32"
+                data-filename="favicon-32x32.png"
+              >
+                favicon-32x32.png
+              </button>
+              <button
+                id="download-180x180"
+                data-size="180"
+                data-filename="apple-touch-icon.png"
+              >
+                apple-touch-icon.png (180px)
+              </button>
+              <button
+                id="download-192x192"
+                data-size="192"
+                data-filename="android-chrome-192x192.png"
+              >
+                android-chrome-192x192.png
+              </button>
+              <button
+                id="download-512x512"
+                data-size="512"
+                data-filename="android-chrome-512x512.png"
+              >
+                android-chrome-512x512.png
+              </button>
+              <button
+                id="download-150x150"
+                data-size="150"
+                data-filename="mstile-150x150.png"
+              >
+                mstile-150x150.png
+              </button>
+            </div>
+            <p>These can be used like this (use your own colors):</p>
+            <pre>
+&lt;link rel="icon" type="image/x-icon" href="/favicon.ico"&gt;
+&lt;link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"&gt;
+&lt;link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"&gt;
+&lt;link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png"&gt;
+&lt;link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png"&gt;
+&lt;link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"&gt;
+&lt;meta name="msapplication-TileColor" content="#da532c"&gt;
+&lt;meta name="msapplication-TileImage" content="/mstile-150x150.png"&gt;
+&lt;link rel="manifest" href="/site.webmanifest"&gt;
+&lt;meta name="theme-color" content="#ffffff"&gt;&lt;!-- Theme Color (used by Android and Windows) --&gt;
+            </pre>
           </div>
         </div>
       </div>
@@ -138,6 +192,6 @@
         <a href="https://github.com/andygock/svg-favicon-generator/">GitHub</a>
       </div>
     </footer>
-    <script src="script.js"></script>
+    <script src="script.js" type="module"></script>
   </body>
 </html>

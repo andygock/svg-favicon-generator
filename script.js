@@ -1,3 +1,6 @@
+// https://canvg.js.org/examples/browser
+import { Canvg } from "https://cdn.skypack.dev/canvg@^4.0.0";
+
 document.addEventListener(
   "DOMContentLoaded",
   (function () {
@@ -194,5 +197,54 @@ document.addEventListener(
       downloadLink.click();
       document.body.removeChild(downloadLink);
     });
+
+    // download buttons for PNGs
+    Array.from(document.querySelectorAll(".download-pngs button")).forEach(
+      (button) => {
+        button.addEventListener("click", async () => {
+          const size = parseInt(button.dataset.size);
+          const filename = button.dataset.filename;
+          let svgContent = document.getElementById("output-svg").textContent;
+
+          // Set SVG width/height to match canvas size, think we can leave the viewBox alone
+          svgContent = svgContent
+            .replace(/width="[^"]*"/, `width="${size}"`)
+            .replace(/height="[^"]*"/, `height="${size}"`);
+
+          // create hidden canvas
+          const canvas = document.createElement("canvas");
+          canvas.style.display = "none";
+          document.body.appendChild(canvas);
+
+          // set canvas size
+          canvas.width = size;
+          canvas.height = size;
+
+          // Render SVG to canvas and download PNG as binary
+          await Canvg.fromString(canvas.getContext("2d"), svgContent, {
+            ignoreMouse: true,
+            ignoreAnimation: true,
+          }).render();
+
+          canvas.toBlob((blob) => {
+            if (!blob) {
+              alert("Failed to generate PNG.");
+              document.body.removeChild(canvas);
+              return;
+            }
+            const pngUrl = URL.createObjectURL(blob);
+            const downloadLink = document.createElement("a");
+            downloadLink.href = pngUrl;
+            downloadLink.download = filename;
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+            URL.revokeObjectURL(pngUrl);
+            // remove canvas
+            document.body.removeChild(canvas);
+          }, "image/png");
+        });
+      }
+    );
   })()
 );
