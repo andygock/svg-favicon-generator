@@ -56,298 +56,221 @@
     />
   </head>
   <body>
-    <div class="center">
-      <div>
-        <h1 class="center">SVG Favicon Generator</h1>
-        <div class="subheading center">
-          Use emojis, unicode symbols, or text to create favicons.
-        </div>
-        <div id="container">
-          <div id="controls">
-            <div>
-              <label for="input">Content 👉</label>
-              <input
-                type="text"
-                id="input"
-                placeholder="Enter a letter"
-                value="😊"
-              />
-            </div>
-            <div>
-              <label for="font-size">Font Size</label>
-              <input
-                type="range"
-                id="font-size"
-                min="72"
-                max="200"
-                value="100"
-                step="1"
-              />
-            </div>
-            <div>
-              <label for="x">X</label>
-              <input
-                type="range"
-                id="x"
-                min="0"
-                max="128"
-                value="64"
-                step="1"
-              />
-            </div>
-            <div>
-              <label for="y">Y</label>
-              <input
-                type="range"
-                id="y"
-                min="0"
-                max="128"
-                value="74"
-                step="1"
-              />
-            </div>
-            <div>
-              <label for="font-family">Font Family</label>
-              <select id="font-family">
-                <option value="sans-serif">sans-serif</option>
-                <option value="serif">serif</option>
-                <option value="monospace">monospace</option>
-              </select>
-            </div>
-            <div>
-              <label for="fill">Fill</label>
-              <input type="color" id="fill" value="#000000" />
-            </div>
-            <div>
-              <label for="font-weight-bold">Bold</label>
-              <input type="checkbox" id="font-weight-bold" />
-            </div>
-            <div>
-              <label for="use-background">Use Background</label>
-              <input type="checkbox" id="use-background" />
-            </div>
-            <div class="background-control">
-              <label for="background-shape">Background Shape</label>
-              <select id="background-shape">
-                <option value="rect">Rect</option>
-                <option value="circle">Circle</option>
-              </select>
-            </div>
-            <div class="background-control">
-              <label for="background">Background Color</label>
-              <input type="color" id="background" value="#ffffff" />
-            </div>
+    <div>
+      <h1 class="center">SVG Favicon Generator</h1>
+      <div class="subheading center">
+        Use emojis, unicode symbols, or text to create favicons.
+      </div>
+      <div id="container">
+        <div id="controls">
+          <div>
+            <label for="input">Content 👉</label>
+            <input
+              type="text"
+              id="input"
+              placeholder="Enter a letter"
+              value="😊"
+            />
           </div>
-          <div id="output">
-            <div id="svg-container">
-              <svg
-                id="svg"
-                xmlns="http://www.w3.org/2000/svg"
-                width="128"
-                height="128"
-                viewBox="0 0 128 128"
-                align="center"
-              >
-                <rect x="0" y="0" width="128" height="128" fill="#ffffff" />
-                <circle cx="64" cy="64" r="64" fill="#ffffff" />
-                <text
-                  x="64"
-                  y="70"
-                  dominant-baseline="middle"
-                  text-anchor="middle"
-                  font-size="100"
-                  font-family="sans-serif"
-                  fill="black"
-                  font-weight="bold"
-                >
-                  😊
-                </text>
-              </svg>
-            </div>
-            <textarea id="output-svg" readonly rows="6" cols="80"></textarea>
-            <div>
-              <button id="copy-svg" class="copy">Copy SVG Source</button>
-              <button id="download-svg">Download SVG</button>
-            </div>
-            <textarea id="output-link" readonly rows="6" cols="80"></textarea>
-            <div>
-              <button id="copy-link" class="copy">
-                Copy as Inline SVG Favicon
-              </button>
-            </div>
-            <h2>Download ICO and PNGs</h2>
+          <div>
+            <label for="font-size">Font Size</label>
+            <input
+              type="range"
+              id="font-size"
+              min="72"
+              max="200"
+              value="100"
+              step="1"
+            />
+          </div>
+          <div>
+            <label for="x">X</label>
+            <input type="range" id="x" min="0" max="128" value="64" step="1" />
+          </div>
+          <div>
+            <label for="y">Y</label>
+            <input type="range" id="y" min="0" max="128" value="74" step="1" />
+          </div>
+          <div>
+            <label for="font-family">Font Family</label>
+            <select id="font-family">
+              <option value="sans-serif">sans-serif</option>
+              <option value="serif">serif</option>
+              <option value="monospace">monospace</option>
+            </select>
+          </div>
+          <div>
+            <label for="fill">Fill</label>
+            <input type="color" id="fill" value="#000000" />
+          </div>
+          <div>
+            <label for="font-weight-bold">Bold</label>
+            <input type="checkbox" id="font-weight-bold" />
+          </div>
+          <div>
+            <label for="use-background">Use Background</label>
+            <input type="checkbox" id="use-background" />
+          </div>
+          <div class="background-control">
+            <label for="background-shape">Background Shape</label>
+            <select id="background-shape">
+              <option value="rect">Rect</option>
+              <option value="circle">Circle</option>
+            </select>
+          </div>
+          <div class="background-control">
+            <label for="background">Background Color</label>
+            <input type="color" id="background" value="#ffffff" />
+          </div>
 
-            <div class="download-pngs">
-              <button
-                id="download-16x16"
-                data-size="16"
-                data-filename="favicon.ico"
-              >
-                favicon.ico (16px)
-              </button>
-              <button
-                id="download-32x32"
-                data-size="32"
-                data-filename="favicon-32x32.png"
-              >
-                favicon-32x32.png
-              </button>
-              <button
-                id="download-180x180"
-                data-size="180"
-                data-filename="apple-touch-icon.png"
-              >
-                apple-touch-icon.png (180px)
-              </button>
-              <button
-                id="download-192x192"
-                data-size="192"
-                data-filename="android-chrome-192x192.png"
-              >
-                android-chrome-192x192.png
-              </button>
-              <button
-                id="download-512x512"
-                data-size="512"
-                data-filename="android-chrome-512x512.png"
-              >
-                android-chrome-512x512.png
-              </button>
-              <button
-                id="download-150x150"
-                data-size="150"
-                data-filename="mstile-150x150.png"
-              >
-                mstile-150x150.png
-              </button>
-              <button
-                id="download-safari-pinned-tab"
-                data-size="128"
-                data-filename="safari-pinned-tab.svg"
-              >
-                safari-pinned-tab.svg (128px)
-              </button>
-            </div>
-
-            <h2>Head Snippets</h2>
-            <details>
-              <summary>
-                What are these <code>&lt;head&gt;</code> snippets?
-              </summary>
-              <table>
-                <thead>
-                  <tr>
-                    <th>File</th>
-                    <th>Why</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><code>favicon.ico</code></td>
-                    <td>
-                      Legacy browsers and desktop tabs still default to this
-                      file. It's often auto-requested by browsers.
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><code>favicon-32x32.png</code></td>
-                    <td>
-                      Modern browsers use this when available, especially for
-                      desktop tabs with high-res screens.
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><code>apple-touch-icon.png</code></td>
-                    <td>
-                      Required for iOS homescreen icons when users "Add to Home
-                      Screen".
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><code>android-chrome-*.png</code></td>
-                    <td>
-                      Android browsers and PWAs use these for homescreen icons,
-                      recent apps thumbnails, and shortcuts.
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><code>safari-pinned-tab.svg</code></td>
-                    <td>
-                      Used only for Safari pinned tabs; SVG format allows
-                      theming and scaling.
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><code>site.webmanifest</code></td>
-                    <td>
-                      Required for PWA support, defining icons, names, colours,
-                      and behaviour on Android and modern browsers.
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><code>mstile-150x150.png</code></td>
-                    <td>Used by Windows 10/11 tiles (if user pins site).</td>
-                  </tr>
-                  <tr>
-                    <td><code>&lt;meta name="theme-color"&gt;</code></td>
-                    <td>
-                      Defines browser toolbar colour on mobile devices and
-                      desktop Chrome.
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </details>
-            <textarea
-              id="output-head"
-              readonly
-              rows="12"
-              cols="80"
-              style="white-space: pre"
+          <div class="pwa-toggle">
+            <label>
+              PWA
+              <input type="checkbox" id="is-pwa" />
+            </label>
+          </div>
+        </div>
+        <div id="output">
+          <div id="svg-container">
+            <svg
+              id="svg"
+              xmlns="http://www.w3.org/2000/svg"
+              width="128"
+              height="128"
+              viewBox="0 0 128 128"
+              align="center"
             >
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-<link rel="manifest" href="/site.webmanifest">
-<meta name="msapplication-TileColor" content="#da532c">
-<meta name="msapplication-TileImage" content="/mstile-150x150.png">
-<meta name="theme-color" content="#ffffff">
-            </textarea>
-            <div>
-              <button id="copy-head" class="copy">Copy Head Snippets</button>
-            </div>
+              <rect x="0" y="0" width="128" height="128" fill="#ffffff" />
+              <circle cx="64" cy="64" r="64" fill="#ffffff" />
+              <text
+                x="64"
+                y="70"
+                dominant-baseline="middle"
+                text-anchor="middle"
+                font-size="100"
+                font-family="sans-serif"
+                fill="black"
+                font-weight="bold"
+              >
+                😊
+              </text>
+            </svg>
+          </div>
+          <textarea id="output-svg" readonly rows="6" cols="80"></textarea>
+          <div>
+            <button id="copy-svg" class="copy">Copy SVG Source</button>
+            <button id="download-svg">Download SVG</button>
+          </div>
+          <textarea id="output-link" readonly rows="6" cols="80"></textarea>
+          <div>
+            <button id="copy-link" class="copy">
+              Copy as Inline SVG Favicon
+            </button>
+          </div>
 
+          <h2>Download ICO and PNGs</h2>
+
+          <div class="download-pngs">
+            <button
+              id="download-16x16"
+              data-size="16"
+              data-filename="favicon.ico"
+            >
+              favicon.ico
+            </button>
+            <button
+              id="download-180x180"
+              data-size="180"
+              data-filename="apple-touch-icon.png"
+            >
+              apple-touch-icon.png
+            </button>
+
+            <button
+              id="download-icon-svg"
+              data-size="128"
+              data-filename="icon.svg"
+            >
+              icon.svg
+            </button>
+
+            <!-- icon-192.png -->
+            <button
+              id="download-icon-192"
+              data-size="192"
+              data-filename="icon-192.png"
+              class="pwa"
+            >
+              icon-192.png
+            </button>
+
+            <!-- icon-512.png -->
+            <button
+              id="download-icon-512"
+              data-size="512"
+              data-filename="icon-512.png"
+              class="pwa"
+            >
+              icon-512.png
+            </button>
+
+            <!-- icon-mask.png, special case: scale to 409px, then increase canvas to 512px -->
+            <!-- not implemented -->
+            <button
+              id="download-icon-mask"
+              data-size="512"
+              data-filename="icon-mask.png"
+              class="pwa"
+              disabled
+            >
+              icon-mask.png
+            </button>
+          </div>
+
+          <p>
+            Implementation below are based on recommendations by
+            <a
+              href="https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs"
+              >Andrew Sitnik</a
+            >.
+          </p>
+
+          <h2>Head Snippets</h2>
+          <textarea
+            id="output-head"
+            readonly
+            rows="5"
+            cols="80"
+            style="white-space: pre"
+          >
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/icon.svg" >
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+            </textarea
+          >
+          <div>
+            <button id="copy-head" class="copy">Copy Head Snippets</button>
+          </div>
+
+          <div id="manifest">
             <h2>Web Manifest</h2>
             <textarea
               id="output-manifest"
               readonly
-              rows="12"
+              rows="9"
               cols="80"
               style="white-space: pre"
             >
 {
-  "name": "Your Site Name",
-  "short_name": "ShortName",
   "icons": [
-    {
-      "src": "/android-chrome-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/android-chrome-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
-  "display": "standalone"
+    { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/icon-mask.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable" },
+    { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512" }
+  ]
 }
-            </textarea>
+              </textarea
+            >
             <div>
               <button id="copy-manifest" class="copy">
                 Copy Manifest JSON
@@ -358,6 +281,7 @@
         </div>
       </div>
     </div>
+
     <footer>
       <div>
         &copy; <a href="https://gock.net/">Andy Gock</a> |

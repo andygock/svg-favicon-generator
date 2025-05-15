@@ -28,6 +28,49 @@ document.addEventListener(
     const inputBold = document.getElementById("font-weight-bold");
     const inputUseBackground = document.getElementById("use-background");
 
+    // pwa checkbox
+    const inputIsPwa = document.getElementById("is-pwa");
+
+    function updatePwaControls() {
+      // Example: Show/hide manifest output based on PWA selection
+      const manifestSection = document.getElementById("manifest");
+      const manifestLine = `<link rel="manifest" href="/site.webmanifest">`;
+      if (inputIsPwa.checked) {
+        if (manifestSection) manifestSection.style.display = "block";
+
+        // append manifest line to the head
+        const manifestTextArea = document.getElementById("output-head");
+        manifestTextArea.textContent += manifestLine;
+
+        // any element with "pwa" as a class, must be made visible
+        const pwaElements = document.querySelectorAll(".pwa");
+        pwaElements.forEach((element) => {
+          // remove the "hide" class name to make it visible, if it exists
+          element.classList.remove("hide");
+        });
+      } else {
+        if (manifestSection) manifestSection.style.display = "none";
+
+        // remove manifest line from the head
+        const manifestTextArea = document.getElementById("output-head");
+        const manifestContent = manifestTextArea.textContent;
+        const manifestLineIndex = manifestContent.indexOf(manifestLine);
+        if (manifestLineIndex !== -1) {
+          manifestTextArea.textContent = manifestContent.slice(
+            0,
+            manifestLineIndex
+          );
+        }
+
+        // any element with "pwa" as a class, must be hidden
+        const pwaElements = document.querySelectorAll(".pwa");
+        pwaElements.forEach((element) => {
+          // add the class name "hide" to hide it, do not change display
+          element.classList.add("hide");
+        });
+      }
+    }
+
     function updateSvg() {
       inputSvgText.textContent = inputText.value;
       inputSvgText.setAttribute("font-size", inputFontSize.value);
@@ -211,6 +254,9 @@ document.addEventListener(
     });
     inputBackgroundShape.addEventListener("input", updateSvg);
 
+    // PWA checkbox
+    inputIsPwa.addEventListener("change", updatePwaControls);
+
     //
     // copy buttons
     //
@@ -229,6 +275,7 @@ document.addEventListener(
 
     updateSvg();
     updateBackgroundControls();
+    updatePwaControls();
 
     //
     // download buttons
@@ -241,7 +288,7 @@ document.addEventListener(
       const svgBlob = new Blob([svgContent], {
         type: "image/svg+xml;charset=utf-8",
       });
-      downloadBlob(svgBlob, "favicon.svg");
+      downloadBlob(svgBlob, "icon.svg");
     });
 
     // download button for site.webmanifest
