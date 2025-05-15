@@ -1,5 +1,5 @@
-// https://canvg.js.org/examples/browser
-import { Canvg } from "https://cdn.skypack.dev/canvg@^4.0.0";
+import { Canvg } from "canvg";
+import { isICO, parseICO } from "icojs/browser";
 
 document.addEventListener(
   "DOMContentLoaded",

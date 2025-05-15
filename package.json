@@ -1,0 +1,21 @@
+{
+  "name": "svg-favicon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "canvg": "^4.0.3",
+    "icojs": "^0.19.5"
+  }
+}
