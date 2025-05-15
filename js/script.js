@@ -109,46 +109,36 @@ document.addEventListener(
       bgControls.forEach((control) => {
         control.style.display = inputUseBackground.checked ? "block" : "none";
       });
-    } // updateBackgroundControls()
-
-    // event listeners
-    inputText.addEventListener("input", updateSvg);
-    inputFontSize.addEventListener("input", updateSvg);
-    inputX.addEventListener("input", updateSvg);
-    inputY.addEventListener("input", updateSvg);
-    inputFontFamily.addEventListener("input", updateSvg);
-    inputFill.addEventListener("input", updateSvg);
-    inputBackground.addEventListener("input", updateSvg);
-    inputBold.addEventListener("input", updateSvg);
-    inputUseBackground.addEventListener("input", () => {
-      updateBackgroundControls();
-      updateSvg();
-    });
-    inputBackgroundShape.addEventListener("input", updateSvg);
-
-    updateSvg();
-    updateBackgroundControls();
+    }
 
     function copyToClipboard(text) {
-      navigator.clipboard.writeText(text).then(
-        () => {
-          console.log("Text copied to clipboard successfully!");
-        },
-        (err) => {
+      if (navigator.clipboard && window.isSecureContext) {
+        // Modern API
+        navigator.clipboard.writeText(text).catch((err) => {
           console.error("Error copying text to clipboard", err);
+        });
+      } else {
+        // Fallback for older browsers
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.style.position = "fixed"; // Prevent scrolling to bottom
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        try {
+          document.execCommand("copy");
+        } catch (err) {
+          console.error("Fallback: Oops, unable to copy", err);
         }
-      );
+        document.body.removeChild(textarea);
+      }
     }
 
     function createInlineFavicon(svgString) {
-      // Encode the SVG string into a data URL
       const encodedSvg = encodeURIComponent(svgString)
         .replace(/'/g, "%27")
         .replace(/"/g, "%22");
-
       const dataUrl = `data:image/svg+xml,${encodedSvg}`;
-
-      // Return the favicon link element as a string
       return `<link id="favicon" rel="icon" type="image/svg+xml" href="${dataUrl}" />`;
     }
 
@@ -188,28 +178,85 @@ document.addEventListener(
       URL.revokeObjectURL(url);
     }
 
+    function downloadTextAsFile(
+      text,
+      filename,
+      type = "text/plain;charset=utf-8"
+    ) {
+      const blob = new Blob([text], { type });
+      const url = URL.createObjectURL(blob);
+      const downloadLink = document.createElement("a");
+      downloadLink.href = url;
+      downloadLink.download = filename;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+      URL.revokeObjectURL(url);
+    }
+
+    //
+    // event listeners
+    //
+    inputText.addEventListener("input", updateSvg);
+    inputFontSize.addEventListener("input", updateSvg);
+    inputX.addEventListener("input", updateSvg);
+    inputY.addEventListener("input", updateSvg);
+    inputFontFamily.addEventListener("input", updateSvg);
+    inputFill.addEventListener("input", updateSvg);
+    inputBackground.addEventListener("input", updateSvg);
+    inputBold.addEventListener("input", updateSvg);
+    inputUseBackground.addEventListener("input", () => {
+      updateBackgroundControls();
+      updateSvg();
+    });
+    inputBackgroundShape.addEventListener("input", updateSvg);
+
+    //
+    // copy buttons
+    //
     setupCopyButton("copy-svg", () => svgTextArea.textContent);
     setupCopyButton("copy-link", () =>
       createInlineFavicon(svgTextArea.textContent)
     );
+    setupCopyButton("copy-head", () => {
+      const text = document.getElementById("output-head").textContent;
+      return text;
+    });
+    setupCopyButton("copy-manifest", () => {
+      const text = document.getElementById("output-manifest").textContent;
+      return text;
+    });
 
-    // download button
-    const downloadButton = document.getElementById("download");
+    updateSvg();
+    updateBackgroundControls();
+
+    //
+    // download buttons
+    //
+
+    // download SVG button
+    const downloadButton = document.getElementById("download-svg");
     downloadButton.addEventListener("click", () => {
       const svgContent = document.getElementById("output-svg").textContent;
       const svgBlob = new Blob([svgContent], {
         type: "image/svg+xml;charset=utf-8",
       });
-      const svgUrl = URL.createObjectURL(svgBlob);
-      const downloadLink = document.createElement("a");
-      downloadLink.href = svgUrl;
-      downloadLink.download = inputText.value + ".svg";
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
+      downloadBlob(svgBlob, "favicon.svg");
     });
 
-    // download buttons for PNGs
+    // download button for site.webmanifest
+    const downloadManifestButton = document.getElementById("download-manifest");
+    downloadManifestButton.addEventListener("click", () => {
+      const manifestContent =
+        document.getElementById("output-manifest").textContent;
+      downloadTextAsFile(
+        manifestContent,
+        "site.webmanifest",
+        "application/manifest+json"
+      );
+    });
+
+    // download buttons for ICO and PNGs
     Array.from(document.querySelectorAll(".download-pngs button")).forEach(
       (button) => {
         button.addEventListener("click", async () => {
@@ -275,6 +322,9 @@ document.addEventListener(
               });
               downloadBlob(blob, filename);
             });
+          } else if (filename.endsWith(".svg")) {
+            // download SVG file
+            downloadTextAsFile(svgContent, filename, "image/svg+xml");
           }
 
           // remove canvas, if it exists

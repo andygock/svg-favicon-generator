@@ -3,8 +3,50 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SVG Favicon Generator</title>
-    <link rel="stylesheet" href="style.css" />
+
+    <!-- SEO Meta Tags -->
+    <title>SVG Favicon Generator - Create Emoji & Text Favicons Online</title>
+    <meta
+      name="description"
+      content="Generate SVG favicons using emojis, unicode symbols, or text. Download as SVG, PNG, ICO, and get all head snippets and manifest for your site. Free, fast, open source and privacy-friendly."
+    />
+    <meta
+      name="keywords"
+      content="SVG favicon, favicon generator, emoji favicon, text favicon, favicon PNG, favicon ICO, favicon SVG, web manifest, favicon online, favicon tool"
+    />
+    <meta name="author" content="Andy Gock" />
+    <link rel="canonical" href="https://svg.gock.net/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta
+      property="og:title"
+      content="SVG Favicon Generator - Create Emoji & Text Favicons Online"
+    />
+    <meta
+      property="og:description"
+      content="Generate SVG favicons using emojis, unicode symbols, or text. Download as SVG, PNG, ICO, and get all head snippets and manifest for your site."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://svg.gock.net/" />
+    <meta property="og:image" content="https://svg.gock.net/og-image.jpg" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="SVG Favicon Generator - Create Emoji & Text Favicons Online"
+    />
+    <meta
+      name="twitter:description"
+      content="Generate SVG favicons using emojis, unicode symbols, or text. Download as SVG, PNG, ICO, and get all head snippets and manifest for your site."
+    />
+    <meta name="twitter:image" content="https://svg.gock.net/og-image.jpg" />
+    <meta name="twitter:site" content="@andygock" />
+
+    <!-- Robots -->
+    <meta name="robots" content="index, follow" />
+
+    <link rel="stylesheet" href="./css/style.css" />
     <link id="favicon" rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -23,7 +65,7 @@
         <div id="container">
           <div id="controls">
             <div>
-              <label for="input">Content</label>
+              <label for="input">Content 👉</label>
               <input
                 type="text"
                 id="input"
@@ -125,13 +167,16 @@
             <textarea id="output-svg" readonly rows="6" cols="80"></textarea>
             <div>
               <button id="copy-svg" class="copy">Copy SVG Source</button>
-              <button id="download">Download</button>
+              <button id="download-svg">Download SVG</button>
             </div>
             <textarea id="output-link" readonly rows="6" cols="80"></textarea>
             <div>
-              <button id="copy-link" class="copy">Copy Link Code</button>
+              <button id="copy-link" class="copy">
+                Copy as Inline SVG Favicon
+              </button>
             </div>
-            <h2>Download PNGs</h2>
+            <h2>Download ICO and PNGs</h2>
+
             <div class="download-pngs">
               <button
                 id="download-16x16"
@@ -175,20 +220,140 @@
               >
                 mstile-150x150.png
               </button>
+              <button
+                id="download-safari-pinned-tab"
+                data-size="128"
+                data-filename="safari-pinned-tab.svg"
+              >
+                safari-pinned-tab.svg (128px)
+              </button>
             </div>
-            <p>These can be used like this (use your own colors):</p>
-            <pre>
-&lt;link rel="icon" type="image/x-icon" href="/favicon.ico"&gt;
-&lt;link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"&gt;
-&lt;link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"&gt;
-&lt;link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png"&gt;
-&lt;link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png"&gt;
-&lt;link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"&gt;
-&lt;meta name="msapplication-TileColor" content="#da532c"&gt;
-&lt;meta name="msapplication-TileImage" content="/mstile-150x150.png"&gt;
-&lt;link rel="manifest" href="/site.webmanifest"&gt;
-&lt;meta name="theme-color" content="#ffffff"&gt;&lt;!-- Theme Color (used by Android and Windows) --&gt;
-            </pre>
+
+            <h2>Head Snippets</h2>
+            <details>
+              <summary>
+                What are these <code>&lt;head&gt;</code> snippets?
+              </summary>
+              <table>
+                <thead>
+                  <tr>
+                    <th>File</th>
+                    <th>Why</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>favicon.ico</code></td>
+                    <td>
+                      Legacy browsers and desktop tabs still default to this
+                      file. It's often auto-requested by browsers.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>favicon-32x32.png</code></td>
+                    <td>
+                      Modern browsers use this when available, especially for
+                      desktop tabs with high-res screens.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>apple-touch-icon.png</code></td>
+                    <td>
+                      Required for iOS homescreen icons when users "Add to Home
+                      Screen".
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>android-chrome-*.png</code></td>
+                    <td>
+                      Android browsers and PWAs use these for homescreen icons,
+                      recent apps thumbnails, and shortcuts.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>safari-pinned-tab.svg</code></td>
+                    <td>
+                      Used only for Safari pinned tabs; SVG format allows
+                      theming and scaling.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>site.webmanifest</code></td>
+                    <td>
+                      Required for PWA support, defining icons, names, colours,
+                      and behaviour on Android and modern browsers.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>mstile-150x150.png</code></td>
+                    <td>Used by Windows 10/11 tiles (if user pins site).</td>
+                  </tr>
+                  <tr>
+                    <td><code>&lt;meta name="theme-color"&gt;</code></td>
+                    <td>
+                      Defines browser toolbar colour on mobile devices and
+                      desktop Chrome.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </details>
+            <textarea
+              id="output-head"
+              readonly
+              rows="12"
+              cols="80"
+              style="white-space: pre"
+            >
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-TileImage" content="/mstile-150x150.png">
+<meta name="theme-color" content="#ffffff">
+            </textarea>
+            <div>
+              <button id="copy-head" class="copy">Copy Head Snippets</button>
+            </div>
+
+            <h2>Web Manifest</h2>
+            <textarea
+              id="output-manifest"
+              readonly
+              rows="12"
+              cols="80"
+              style="white-space: pre"
+            >
+{
+  "name": "Your Site Name",
+  "short_name": "ShortName",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}
+            </textarea>
+            <div>
+              <button id="copy-manifest" class="copy">
+                Copy Manifest JSON
+              </button>
+              <button id="download-manifest">Download site.webmanifest</button>
+            </div>
           </div>
         </div>
       </div>
@@ -199,6 +364,6 @@
         <a href="https://github.com/andygock/svg-favicon-generator/">GitHub</a>
       </div>
     </footer>
-    <script src="script.js" type="module"></script>
+    <script src="./js/script.js" type="module"></script>
   </body>
 </html>

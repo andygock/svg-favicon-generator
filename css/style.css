@@ -30,6 +30,7 @@ textarea {
   font-optical-sizing: auto;
   font-style: normal;
   margin-top: var(--margin);
+  width: 100%;
 }
 
 #svg-container {
@@ -49,6 +50,7 @@ textarea {
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;
+  min-width: 250px;
 }
 
 #controls > div {
@@ -149,4 +151,41 @@ button.copy {
 
 button.copy:hover {
   background-color: darkslateblue;
+}
+
+summary {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+}
+
+/* Add arrow indicator to summary */
+summary::marker {
+  /* Hide default marker in most browsers */
+  display: none;
+}
+
+summary::before {
+  content: "▶";
+  display: inline-block;
+  margin-right: 0.5em;
+  transition: transform 0.2s;
+}
+
+/* Rotate arrow when details is open */
+details[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+input#input {
+  color: #333;
+  border: 2px solid #e52e71;
+  box-shadow: 0 2px 8px rgba(229, 46, 113, 0.3);
+  transition: box-shadow 0.2s, border-color 0.2s;
+
+  &:focus {
+    outline: none;
+    border-color: #ff8a00;
+    box-shadow: 0 0 0 3px rgba(255, 138, 0, 0.2);
+  }
 }
