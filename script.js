@@ -1,5 +1,5 @@
 import { Canvg } from "canvg";
-import { isICO, parseICO } from "icojs/browser";
+import { parseICO } from "icojs/browser";
 
 document.addEventListener(
   "DOMContentLoaded",
@@ -177,6 +177,17 @@ document.addEventListener(
       });
     }
 
+    function downloadBlob(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      const downloadLink = document.createElement("a");
+      downloadLink.href = url;
+      downloadLink.download = filename;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+      URL.revokeObjectURL(url);
+    }
+
     setupCopyButton("copy-svg", () => svgTextArea.textContent);
     setupCopyButton("copy-link", () =>
       createInlineFavicon(svgTextArea.textContent)
@@ -226,23 +237,50 @@ document.addEventListener(
             ignoreAnimation: true,
           }).render();
 
-          canvas.toBlob((blob) => {
-            if (!blob) {
-              alert("Failed to generate PNG.");
-              document.body.removeChild(canvas);
-              return;
-            }
-            const pngUrl = URL.createObjectURL(blob);
-            const downloadLink = document.createElement("a");
-            downloadLink.href = pngUrl;
-            downloadLink.download = filename;
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-            document.body.removeChild(downloadLink);
-            URL.revokeObjectURL(pngUrl);
-            // remove canvas
+          if (filename.endsWith(".png")) {
+            // convert canvas to PNG format
+            canvas.toBlob((blob) => {
+              if (!blob) {
+                alert("Failed to generate PNG.");
+                document.body.removeChild(canvas);
+                return;
+              }
+
+              // download PNG file
+              downloadBlob(blob, filename);
+            }, "image/png");
+          } else if (filename.endsWith(".ico")) {
+            // convert canvas to ICO format
+            // https://github.com/egy186/icojs
+            canvas.toBlob(async (canvasBlob) => {
+              if (!canvasBlob) {
+                alert("Failed to generate ICO.");
+                document.body.removeChild(canvas);
+                return;
+              }
+
+              const arrayBuffer = await canvasBlob.arrayBuffer();
+
+              // returns Uint8Array in .data
+              const icoData = (await parseICO(arrayBuffer))?.[0]?.data;
+              if (!icoData) {
+                alert("Failed to parse ICO data.");
+                document.body.removeChild(canvas);
+                return;
+              }
+
+              // download ICO file
+              const blob = new Blob([icoData], {
+                type: "image/x-icon",
+              });
+              downloadBlob(blob, filename);
+            });
+          }
+
+          // remove canvas, if it exists
+          if (canvas?.parentNode) {
             document.body.removeChild(canvas);
-          }, "image/png");
+          }
         });
       }
     );

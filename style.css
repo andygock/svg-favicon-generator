@@ -142,3 +142,11 @@ footer {
 a {
   text-decoration: none;
 }
+
+button.copy {
+  background-color: slateblue;
+}
+
+button.copy:hover {
+  background-color: darkslateblue;
+}

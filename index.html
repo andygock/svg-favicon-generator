@@ -124,15 +124,22 @@
             </div>
             <textarea id="output-svg" readonly rows="6" cols="80"></textarea>
             <div>
-              <button id="copy-svg">Copy SVG Source</button>
+              <button id="copy-svg" class="copy">Copy SVG Source</button>
               <button id="download">Download</button>
             </div>
             <textarea id="output-link" readonly rows="6" cols="80"></textarea>
             <div>
-              <button id="copy-link">Copy Link Code</button>
+              <button id="copy-link" class="copy">Copy Link Code</button>
             </div>
             <h2>Download PNGs</h2>
             <div class="download-pngs">
+              <button
+                id="download-16x16"
+                data-size="16"
+                data-filename="favicon.ico"
+              >
+                favicon.ico (16px)
+              </button>
               <button
                 id="download-32x32"
                 data-size="32"
