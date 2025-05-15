@@ -6,14 +6,20 @@ This is a Vanilla JS web application that allows users to create and customize S
 
 ## Features
 
-- Input text for the favicon
+- Input text, emoji, or unicode symbol for the favicon
 - Adjust font size, position (X and Y coordinates)
 - Select font family (Sans-serif, Serif, Monospace)
 - Choose text color
 - Toggle bold text
-- Enable and customize background (rectangle or circle)
+- Enable and customize background (rectangle or circle, with color)
 - Download the generated SVG
 - Copy the SVG source to the clipboard
+- Copy as inline SVG favicon link
+- Download ICO and PNG files in multiple sizes (16x16, 32x32, 180x180, 192x192, 512x512, 150x150)
+- Download Safari pinned tab SVG
+- Copy all recommended `<head>` favicon and manifest snippets
+- View and copy a ready-to-use web manifest (site.webmanifest)
+- Download the web manifest JSON
 
 ## Usage
 
