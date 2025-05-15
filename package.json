@@ -1,7 +1,7 @@
 {
-  "name": "svg-favicon",
+  "name": "svg-favicon-generator",
   "version": "1.0.0",
-  "description": "",
+  "description": "Generate SVG favicons using emojis, unicode symbols, or text. Download as SVG, PNG, ICO, and get all head snippets and manifest for your site. Free, fast, open source and privacy-friendly.",
   "main": "index.js",
   "scripts": {
     "dev": "vite",
