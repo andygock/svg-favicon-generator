@@ -45,3 +45,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - [Demo](https://svg.gock.net/)
 - [GitHub Repository](https://github.com/andygock/svg-favicon-generator/)
 - [Author's Website](https://gock.net/)
+- [How to Favicon in 2025: Three files that fit most needs](https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs) by Andrew Sitnik

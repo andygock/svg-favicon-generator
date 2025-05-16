@@ -47,7 +47,9 @@
     <meta name="robots" content="index, follow" />
 
     <link rel="stylesheet" href="./css/style.css" />
-    <link id="favicon" rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="64x64" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" id="favicon" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -62,6 +64,7 @@
         Use emojis, unicode symbols, or text to create favicons.
       </div>
       <div id="container">
+        <!-- left hand controls pane -->
         <div id="controls">
           <div>
             <label for="input">Content 👉</label>
@@ -123,38 +126,77 @@
             <input type="color" id="background" value="#ffffff" />
           </div>
 
-          <div class="pwa-toggle">
+          <div class="pwa-toggle" style="display: none">
             <label>
               PWA
               <input type="checkbox" id="is-pwa" />
             </label>
           </div>
         </div>
+
+        <!-- right hand output pane -->
         <div id="output">
           <div id="svg-container">
-            <svg
-              id="svg"
-              xmlns="http://www.w3.org/2000/svg"
-              width="128"
-              height="128"
-              viewBox="0 0 128 128"
-              align="center"
-            >
-              <rect x="0" y="0" width="128" height="128" fill="#ffffff" />
-              <circle cx="64" cy="64" r="64" fill="#ffffff" />
-              <text
-                x="64"
-                y="70"
-                dominant-baseline="middle"
-                text-anchor="middle"
-                font-size="100"
-                font-family="sans-serif"
-                fill="black"
-                font-weight="bold"
+            <div id="svg-content">
+              <svg
+                id="svg"
+                xmlns="http://www.w3.org/2000/svg"
+                width="128"
+                height="128"
+                viewBox="0 0 128 128"
+                align="center"
               >
-                😊
-              </text>
-            </svg>
+                <rect x="0" y="0" width="128" height="128" fill="#ffffff" />
+                <circle cx="64" cy="64" r="64" fill="#ffffff" />
+                <text
+                  x="64"
+                  y="70"
+                  dominant-baseline="middle"
+                  text-anchor="middle"
+                  font-size="100"
+                  font-family="sans-serif"
+                  fill="black"
+                  font-weight="bold"
+                >
+                  😊
+                </text>
+              </svg>
+            </div>
+            <div id="svg-safe-overlay" class="hide">
+              <svg
+                id="svg"
+                xmlns="http://www.w3.org/2000/svg"
+                width="128"
+                height="128"
+                viewBox="0 0 128 128"
+                align="center"
+              >
+                <circle
+                  cx="64"
+                  cy="64"
+                  r="51.125"
+                  fill="none"
+                  stroke="#f00"
+                  stroke-width="1"
+                  stroke-dasharray="8,8"
+                >
+                  <animateTransform
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 64 64"
+                    to="360 64 64"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                  <animate
+                    attributeName="stroke"
+                    values="#f00;#0f0;#00f;#f00"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+              </svg>
+            </div>
           </div>
           <textarea id="output-svg" readonly rows="6" cols="80"></textarea>
           <div>
@@ -172,8 +214,8 @@
 
           <div class="download-pngs">
             <button
-              id="download-16x16"
-              data-size="16"
+              id="download-64x64"
+              data-size="64"
               data-filename="favicon.ico"
             >
               favicon.ico
@@ -227,14 +269,6 @@
             </button>
           </div>
 
-          <p>
-            Implementation below are based on recommendations by
-            <a
-              href="https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs"
-              >Andrew Sitnik</a
-            >.
-          </p>
-
           <h2>Head Snippets</h2>
           <textarea
             id="output-head"
@@ -243,7 +277,7 @@
             cols="80"
             style="white-space: pre"
           >
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="64x64">
 <link rel="icon" type="image/svg+xml" href="/icon.svg" >
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">

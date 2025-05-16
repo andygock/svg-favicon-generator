@@ -182,7 +182,7 @@ document.addEventListener(
         .replace(/'/g, "%27")
         .replace(/"/g, "%22");
       const dataUrl = `data:image/svg+xml,${encodedSvg}`;
-      return `<link id="favicon" rel="icon" type="image/svg+xml" href="${dataUrl}" />`;
+      return `<link rel="icon" type="image/svg+xml" href="${dataUrl}" />`;
     }
 
     function updateLinkTextArea(svgString) {

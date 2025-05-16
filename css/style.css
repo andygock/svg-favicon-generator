@@ -17,6 +17,7 @@
   --padding: 8px;
   --margin: 4px;
 }
+
 html {
   padding: 1rem;
 }
@@ -37,6 +38,24 @@ textarea {
   width: 128px;
   height: 128px;
   border: solid 1px var(--border-color);
+}
+
+#svg-content {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 128px;
+  height: 128px;
+}
+
+#svg-safe-overlay {
+  position: relative;
+  top: -128px;
+  left: 0;
+  width: 128px;
+  height: 128px;
+  pointer-events: none; /* allows clicks to pass through */
+  z-index: 1;
 }
 
 #container {
