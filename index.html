@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO Meta Tags -->
+    <title>SVG Favicon Generator - Create Emoji & Text Favicons Online</title>
+    <meta
+      name="description"
+      content="Generate SVG favicons using emojis, unicode symbols, or text. Download as SVG, PNG, ICO, and get all head snippets and manifest for your site. Free, fast, open source and privacy-friendly."
+    />
+    <meta
+      name="keywords"
+      content="SVG favicon, favicon generator, emoji favicon, text favicon, favicon PNG, favicon ICO, favicon SVG, web manifest, favicon online, favicon tool"
+    />
+    <meta name="author" content="Andy Gock" />
+    <link rel="canonical" href="https://svg.gock.net/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta
+      property="og:title"
+      content="SVG Favicon Generator - Create Emoji & Text Favicons Online"
+    />
+    <meta
+      property="og:description"
+      content="Generate SVG favicons using emojis, unicode symbols, or text. Download as SVG, PNG, ICO, and get all head snippets and manifest for your site."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://svg.gock.net/" />
+    <meta property="og:image" content="https://svg.gock.net/og-image.jpg" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="SVG Favicon Generator - Create Emoji & Text Favicons Online"
+    />
+    <meta
+      name="twitter:description"
+      content="Generate SVG favicons using emojis, unicode symbols, or text. Download as SVG, PNG, ICO, and get all head snippets and manifest for your site."
+    />
+    <meta name="twitter:image" content="https://svg.gock.net/og-image.jpg" />
+    <meta name="twitter:site" content="@andygock" />
+
+    <!-- Robots -->
+    <meta name="robots" content="index, follow" />
+
+    <link rel="icon" type="image/x-icon" href="./favicon.ico" sizes="64x64" />
+    <link rel="icon" type="image/svg+xml" href="./icon.svg" id="favicon" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" crossorigin src="./assets/index-CIPlfOpb.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CQE7eRRw.css">
+  </head>
+  <body>
+    <div>
+      <h1 class="center">SVG Favicon Generator</h1>
+      <div class="subheading center">
+        Use emojis, unicode symbols, or text to create favicons.
+      </div>
+      <div id="container">
+        <!-- left hand controls pane -->
+        <div id="controls">
+          <div>
+            <label for="input">Content 👉</label>
+            <input
+              type="text"
+              id="input"
+              placeholder="Enter a letter"
+              value="😊"
+            />
+          </div>
+          <div>
+            <label for="font-size">Font Size</label>
+            <input
+              type="range"
+              id="font-size"
+              min="72"
+              max="200"
+              value="100"
+              step="1"
+            />
+          </div>
+          <div>
+            <label for="x">X</label>
+            <input type="range" id="x" min="0" max="128" value="64" step="1" />
+          </div>
+          <div>
+            <label for="y">Y</label>
+            <input type="range" id="y" min="0" max="128" value="74" step="1" />
+          </div>
+          <div>
+            <label for="font-family">Font Family</label>
+            <select id="font-family">
+              <option value="sans-serif">sans-serif</option>
+              <option value="serif">serif</option>
+              <option value="monospace">monospace</option>
+            </select>
+          </div>
+          <div>
+            <label for="fill">Fill</label>
+            <input type="color" id="fill" value="#000000" />
+          </div>
+          <div>
+            <label for="font-weight-bold">Bold</label>
+            <input type="checkbox" id="font-weight-bold" />
+          </div>
+          <div>
+            <label for="use-background">Use Background</label>
+            <input type="checkbox" id="use-background" />
+          </div>
+          <div class="background-control">
+            <label for="background-shape">Background Shape</label>
+            <select id="background-shape">
+              <option value="rect">Rect</option>
+              <option value="circle">Circle</option>
+            </select>
+          </div>
+          <div class="background-control">
+            <label for="background">Background Color</label>
+            <input type="color" id="background" value="#ffffff" />
+          </div>
+
+          <div class="pwa-toggle" style="display: none">
+            <label>
+              PWA
+              <input type="checkbox" id="is-pwa" />
+            </label>
+          </div>
+        </div>
+
+        <!-- right hand output pane -->
+        <div id="output">
+          <div id="svg-container">
+            <div id="svg-content">
+              <svg
+                id="svg"
+                xmlns="http://www.w3.org/2000/svg"
+                width="128"
+                height="128"
+                viewBox="0 0 128 128"
+                align="center"
+              >
+                <rect x="0" y="0" width="128" height="128" fill="#ffffff" />
+                <circle cx="64" cy="64" r="64" fill="#ffffff" />
+                <text
+                  x="64"
+                  y="70"
+                  dominant-baseline="middle"
+                  text-anchor="middle"
+                  font-size="100"
+                  font-family="sans-serif"
+                  fill="black"
+                  font-weight="bold"
+                >
+                  😊
+                </text>
+              </svg>
+            </div>
+            <div id="svg-safe-overlay" class="hide">
+              <svg
+                id="svg"
+                xmlns="http://www.w3.org/2000/svg"
+                width="128"
+                height="128"
+                viewBox="0 0 128 128"
+                align="center"
+              >
+                <circle
+                  cx="64"
+                  cy="64"
+                  r="51.125"
+                  fill="none"
+                  stroke="#f00"
+                  stroke-width="1"
+                  stroke-dasharray="8,8"
+                >
+                  <animateTransform
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 64 64"
+                    to="360 64 64"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                  <animate
+                    attributeName="stroke"
+                    values="#f00;#0f0;#00f;#f00"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+              </svg>
+            </div>
+          </div>
+          <textarea id="output-svg" readonly rows="6" cols="80"></textarea>
+          <div>
+            <button id="copy-svg" class="copy">Copy SVG Source</button>
+            <button id="download-svg">Download SVG</button>
+          </div>
+          <textarea id="output-link" readonly rows="6" cols="80"></textarea>
+          <div>
+            <button id="copy-link" class="copy">
+              Copy as Inline SVG Favicon
+            </button>
+          </div>
+
+          <h2>Download ICO and PNGs</h2>
+
+          <div class="download-pngs">
+            <button
+              id="download-64x64"
+              data-size="64"
+              data-filename="favicon.ico"
+            >
+              favicon.ico
+            </button>
+            <button
+              id="download-180x180"
+              data-size="180"
+              data-filename="apple-touch-icon.png"
+            >
+              apple-touch-icon.png
+            </button>
+
+            <button
+              id="download-icon-svg"
+              data-size="128"
+              data-filename="icon.svg"
+            >
+              icon.svg
+            </button>
+
+            <!-- icon-192.png -->
+            <button
+              id="download-icon-192"
+              data-size="192"
+              data-filename="icon-192.png"
+              class="pwa"
+            >
+              icon-192.png
+            </button>
+
+            <!-- icon-512.png -->
+            <button
+              id="download-icon-512"
+              data-size="512"
+              data-filename="icon-512.png"
+              class="pwa"
+            >
+              icon-512.png
+            </button>
+
+            <!-- icon-mask.png, special case: scale to 409px, then increase canvas to 512px -->
+            <!-- not implemented -->
+            <button
+              id="download-icon-mask"
+              data-size="512"
+              data-filename="icon-mask.png"
+              class="pwa"
+              disabled
+            >
+              icon-mask.png
+            </button>
+          </div>
+
+          <h2>Head Snippets</h2>
+          <textarea
+            id="output-head"
+            readonly
+            rows="5"
+            cols="80"
+            style="white-space: pre"
+          >
+<link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="64x64">
+<link rel="icon" type="image/svg+xml" href="/icon.svg" >
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+            </textarea
+          >
+          <div>
+            <button id="copy-head" class="copy">Copy Head Snippets</button>
+          </div>
+
+          <div id="manifest">
+            <h2>Web Manifest</h2>
+            <textarea
+              id="output-manifest"
+              readonly
+              rows="9"
+              cols="80"
+              style="white-space: pre"
+            >
+{
+  "icons": [
+    { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/icon-mask.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable" },
+    { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512" }
+  ]
+}
+              </textarea
+            >
+            <div>
+              <button id="copy-manifest" class="copy">
+                Copy Manifest JSON
+              </button>
+              <button id="download-manifest">Download site.webmanifest</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div>
+        &copy; <a href="https://gock.net/">Andy Gock</a> |
+        <a href="https://github.com/andygock/svg-favicon-generator/">GitHub</a>
+      </div>
+    </footer>
+  </body>
+</html>
