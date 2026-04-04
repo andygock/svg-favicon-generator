@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import { Canvg } from "canvg";
 import { CompactHeader } from "./components/CompactHeader";
 import { ControlPanel } from "./components/ControlPanel";
 import { Footer } from "./components/Footer";
@@ -35,11 +34,101 @@ function App() {
   const svgDataUrl = useMemo(() => encodeSvgData(svgMarkup), [svgMarkup]);
 
   useEffect(() => {
-    const faviconLink = document.getElementById("favicon");
-    if (faviconLink) {
-      faviconLink.setAttribute("href", svgDataUrl);
-    }
-  }, [svgDataUrl]);
+    // Generate a PNG favicon from the live preview SVG so the browser
+    // tab icon matches the rendered preview. Use devicePixelRatio to
+    // produce a crisp icon on high-DPI displays.
+    let cancelled = false;
+
+    (async () => {
+      const faviconLink = document.getElementById("favicon");
+      if (!faviconLink) return;
+
+      // Default to the SVG data URL as a fallback
+      let href = svgDataUrl;
+
+      try {
+        const previewSvg = document.querySelector(".preview-surface svg");
+        let serialized = svgMarkup;
+        if (previewSvg) {
+          const clone = previewSvg.cloneNode(true);
+          clone.setAttribute("width", "128");
+          clone.setAttribute("height", "128");
+
+          const textEls = clone.querySelectorAll("text, tspan");
+          const srcTextEls = previewSvg.querySelectorAll("text, tspan");
+          for (let i = 0; i < textEls.length; i++) {
+            const dst = textEls[i];
+            const src = srcTextEls[i] || dst;
+            const cs = window.getComputedStyle(src);
+            const inline = [];
+            if (cs.fontFamily) inline.push(`font-family: ${cs.fontFamily}`);
+            if (cs.fontSize) inline.push(`font-size: ${cs.fontSize}`);
+            if (cs.fontWeight) inline.push(`font-weight: ${cs.fontWeight}`);
+            if (cs.fontStyle) inline.push(`font-style: ${cs.fontStyle}`);
+            if (cs.letterSpacing)
+              inline.push(`letter-spacing: ${cs.letterSpacing}`);
+            if (cs.fill) inline.push(`fill: ${cs.fill}`);
+            const ta = src.getAttribute("text-anchor") || cs.textAnchor;
+            if (ta) dst.setAttribute("text-anchor", ta);
+            const db =
+              src.getAttribute("dominant-baseline") || cs.dominantBaseline;
+            if (db) dst.setAttribute("dominant-baseline", db);
+            if (inline.length) dst.setAttribute("style", inline.join("; "));
+          }
+
+          serialized = new XMLSerializer().serializeToString(clone);
+        }
+
+        const svgBlob = new Blob([serialized], {
+          type: "image/svg+xml;charset=utf-8",
+        });
+        const url = URL.createObjectURL(svgBlob);
+
+        try {
+          const ratio = Math.max(1, window.devicePixelRatio || 1);
+          const size = 64; // base favicon size; browser will scale as needed
+          const canvas = document.createElement("canvas");
+          canvas.width = size * ratio;
+          canvas.height = size * ratio;
+          const ctx = canvas.getContext("2d");
+          if (!ctx) throw new Error("Canvas unavailable");
+
+          await new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => {
+              try {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                resolve();
+              } catch (err) {
+                reject(err);
+              }
+            };
+            img.onerror = () =>
+              reject(new Error("Failed to load SVG for favicon"));
+            img.src = url;
+          });
+
+          // Use PNG data URL for favicon to ensure consistent tab rendering
+          href = canvas.toDataURL("image/png");
+        } finally {
+          try {
+            URL.revokeObjectURL(url);
+          } catch (e) {
+            // ignore
+          }
+        }
+      } catch (e) {
+        // Keep fallback href (svgDataUrl)
+      }
+
+      if (!cancelled) faviconLink.setAttribute("href", href);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [svgDataUrl, svgMarkup]);
 
   const updateField = (key) => (event) => {
     const value =
@@ -107,10 +196,88 @@ function App() {
         throw new Error("Canvas rendering is unavailable.");
       }
 
-      await Canvg.fromString(context, exportMarkup, {
-        ignoreMouse: true,
-        ignoreAnimation: true,
-      }).render();
+      // Rasterize the SVG using the browser's native renderer by
+      // creating an object URL for the SVG markup and drawing the
+      // resulting image into the canvas. This avoids font/measurement
+      // differences introduced by JS-based renderers (e.g. Canvg).
+      // Prefer serializing the live preview SVG and inlining computed
+      // styles so exported SVG uses the same font metrics and styling
+      // as the DOM preview. Fall back to `exportMarkup` if preview
+      // isn't available.
+      let serialized = exportMarkup;
+      try {
+        const previewSvg = document.querySelector(".preview-surface svg");
+        if (previewSvg) {
+          const clone = previewSvg.cloneNode(true);
+
+          // Ensure explicit size attributes so rasterization scales predictably
+          clone.setAttribute("width", "128");
+          clone.setAttribute("height", "128");
+
+          // Inline computed styles for textual elements to preserve
+          // font-family, font-size, font-weight, fill, and baseline
+          // behavior when the SVG is loaded off-document.
+          const textEls = clone.querySelectorAll("text, tspan");
+          const srcTextEls = previewSvg.querySelectorAll("text, tspan");
+          for (let i = 0; i < textEls.length; i++) {
+            const dst = textEls[i];
+            const src = srcTextEls[i] || dst;
+            const cs = window.getComputedStyle(src);
+            const inline = [];
+            if (cs.fontFamily) inline.push(`font-family: ${cs.fontFamily}`);
+            if (cs.fontSize) inline.push(`font-size: ${cs.fontSize}`);
+            if (cs.fontWeight) inline.push(`font-weight: ${cs.fontWeight}`);
+            if (cs.fontStyle) inline.push(`font-style: ${cs.fontStyle}`);
+            if (cs.letterSpacing)
+              inline.push(`letter-spacing: ${cs.letterSpacing}`);
+            if (cs.fill) inline.push(`fill: ${cs.fill}`);
+            // Preserve text-anchor/dominant-baseline if present on source
+            const ta = src.getAttribute("text-anchor") || cs.textAnchor;
+            if (ta) dst.setAttribute("text-anchor", ta);
+            const db =
+              src.getAttribute("dominant-baseline") || cs.dominantBaseline;
+            if (db) dst.setAttribute("dominant-baseline", db);
+
+            if (inline.length) dst.setAttribute("style", inline.join("; "));
+          }
+
+          // Serialize using XMLSerializer for robust escaping
+          serialized = new XMLSerializer().serializeToString(clone);
+        }
+      } catch (e) {
+        // If anything fails, fall back to the generated markup
+        serialized = exportMarkup;
+      }
+
+      const svgBlob = new Blob([serialized], {
+        type: "image/svg+xml;charset=utf-8",
+      });
+      const url = URL.createObjectURL(svgBlob);
+
+      try {
+        await new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => {
+            try {
+              context.clearRect(0, 0, canvas.width, canvas.height);
+              context.drawImage(img, 0, 0, canvas.width, canvas.height);
+              resolve();
+            } catch (err) {
+              reject(err);
+            }
+          };
+          img.onerror = (e) => reject(new Error("Failed to load SVG image."));
+          // Use object URL to ensure the browser rasterizes the provided SVG
+          img.src = url;
+        });
+      } finally {
+        // Revoke the object URL regardless of success/failure
+        try {
+          URL.revokeObjectURL(url);
+        } catch (e) {
+          // ignore
+        }
+      }
 
       const pngBlob = await canvasToBlob(canvas, "image/png");
       if (!pngBlob) {

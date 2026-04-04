@@ -83,6 +83,9 @@ export function createSvgMarkup(state) {
       : `<rect x="0" y="0" width="128" height="128" fill="${bg}" />`
     : "";
 
+  // Generate a simple, standards-compliant SVG. Export code uses the
+  // browser's native rasterizer when producing PNGs so no manual
+  // vertical nudges are necessary.
   return [
     `<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="${aria}">`,
     safeBackgroundMarkup,

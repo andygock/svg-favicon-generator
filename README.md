@@ -1,35 +1,31 @@
-# SVG Favicon Generator
+# SVG Favicon
 
-This is a React + Vite web application that allows users to create and customize SVG favicons. Users can input text, adjust font size, position, font family, fill color, and background shape and color. The generated SVG can be downloaded or copied to the clipboard.
+Simple React + Vite app for designing and exporting SVG-based favicons and common favicon assets.
 
-## Features
+## Highlights
 
-- Input text, emoji, or unicode symbol for the favicon
-- Adjust font size, position (X and Y coordinates)
-- Select font family (Sans-serif, Serif, Monospace)
-- Choose text color
-- Toggle bold text
-- Enable and customize background (rectangle or circle, with color)
-- Download the generated SVG
-- Copy the SVG source to the clipboard
-- Copy as inline SVG favicon link
-- Download ICO and PNG files in multiple sizes (16x16, 32x32, 180x180, 192x192, 512x512, 150x150)
-- Download icon SVG, PNG, and ICO assets
-- Copy all recommended `<head>` favicon and manifest snippets
-- View and copy a ready-to-use web manifest (site.webmanifest)
-- Download the web manifest JSON
-- Built with React and the latest Vite
+- Live preview of the generated SVG (sanitized for safety)
+- Edit content (emoji, text), font size, X/Y position, font family, weight, and color
+- Optional background (rectangle or circle) with configurable color
+- Copy SVG source, inline favicon link, head snippets, and manifest JSON to clipboard
+- Download `icon.svg`, PNG assets (multiple sizes), and `favicon.ico`
+- Export common assets used for favicons and web manifests
 
-## Usage
+## Quick start
 
-1. Open the application in a web browser.
-2. Use the controls to customize the favicon:
-   - Enter text in the Content input field.
-   - Adjust the font size, position, font family, and fill color.
-   - Toggle bold text using the checkbox.
-   - Enable background and choose shape and color if needed.
-3. The generated SVG will be displayed in the preview area.
-4. Copy or download the generated SVG, ICO, PNG, and manifest assets from the export panel.
+Install dependencies and run the dev server:
+
+```
+pnpm install
+pnpm dev
+```
+
+Build for production:
+
+```
+pnpm build
+pnpm preview
+```
 
 ## License
 
