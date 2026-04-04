@@ -27,7 +27,7 @@ select option {
 }
 
 textarea {
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   font-optical-sizing: auto;
   font-style: normal;
   margin-top: var(--margin);
@@ -212,7 +212,9 @@ input#input {
   color: #333;
   border: 2px solid #e52e71;
   box-shadow: 0 2px 8px rgba(229, 46, 113, 0.3);
-  transition: box-shadow 0.2s, border-color 0.2s;
+  transition:
+    box-shadow 0.2s,
+    border-color 0.2s;
 
   &:focus {
     outline: none;
