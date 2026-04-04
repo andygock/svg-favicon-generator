@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite --open",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:sanitize": "node scripts/test-sanitize.js"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
   },
   "dependencies": {
     "canvg": "^4.0.3",
+    "dompurify": "^3.3.3",
     "icojs": "^0.20.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"

@@ -1,5 +1,6 @@
 import { SnippetCard } from "./SnippetCard";
 import CopyButton from "./CopyButton";
+import DOMPurify from "dompurify";
 
 export function PreviewPanel({
   svgMarkup,
@@ -112,7 +113,11 @@ export function PreviewPanel({
           <div className="preview-frame" aria-label="Generated favicon preview">
             <div
               className="preview-surface"
-              dangerouslySetInnerHTML={{ __html: svgMarkup }}
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(svgMarkup || "", {
+                  USE_PROFILES: { svg: true },
+                }),
+              }}
             />
           </div>
 
