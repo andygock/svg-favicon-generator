@@ -94,14 +94,29 @@ export function createSvgMarkup(state) {
 }
 
 export function downloadBlob(blob, filename) {
+  // Create an object URL and trigger a download. Some browsers may not
+  // start the download synchronously when `link.click()` returns, so
+  // revoking the URL immediately can abort the transfer. Revoke the
+  // object URL after a short delay to improve robustness.
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
   link.download = filename;
   document.body.appendChild(link);
+  // Trigger download
   link.click();
   link.remove();
-  URL.revokeObjectURL(url);
+
+  // Give the browser time to start the download before revoking the
+  // object URL. 1 second is a conservative default; it's short enough
+  // to free resources while avoiding premature revocation.
+  setTimeout(() => {
+    try {
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      // Swallow errors to avoid breaking callers if revoke fails.
+    }
+  }, 1000);
 }
 
 export function downloadTextFile(
@@ -151,18 +166,57 @@ export async function copyText(text) {
     return true;
   }
 
+  // Fallback using a hidden textarea. Save and restore the document
+  // focus/selection so we don't disrupt the user's interaction. Return
+  // an explicit boolean success value and rethrow unexpected errors so
+  // callers can surface failures to users.
   const textarea = document.createElement("textarea");
   textarea.value = text;
   textarea.setAttribute("readonly", "true");
   textarea.style.position = "fixed";
   textarea.style.opacity = "0";
+
+  const previousActive = document.activeElement;
+  const selection = document.getSelection();
+  const savedRanges = [];
+  if (selection && selection.rangeCount > 0) {
+    for (let i = 0; i < selection.rangeCount; i++) {
+      savedRanges.push(selection.getRangeAt(i).cloneRange());
+    }
+  }
+
   document.body.appendChild(textarea);
   textarea.focus();
   textarea.select();
 
   try {
-    return document.execCommand("copy");
+    const result = document.execCommand("copy");
+    return !!result;
+  } catch (err) {
+    // Rethrow so callers can handle/display the error
+    throw err;
   } finally {
+    // Clean up the temporary element
     textarea.remove();
+
+    // Restore previous focus
+    try {
+      if (previousActive && typeof previousActive.focus === "function") {
+        previousActive.focus();
+      }
+    } catch (e) {
+      // ignore
+    }
+
+    // Restore previous selection ranges
+    try {
+      const sel = document.getSelection();
+      if (sel) {
+        sel.removeAllRanges();
+        for (const r of savedRanges) sel.addRange(r);
+      }
+    } catch (e) {
+      // ignore
+    }
   }
 }
