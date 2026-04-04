@@ -4,7 +4,25 @@ export function ControlPanel({ state, fontOptions, onFieldChange }) {
       <section className="control-group">
         <h2 className="section-title">Glyph</h2>
         <label className="field field-text">
-          <span className="field-label">Content</span>
+          <span className="field-label">
+            Content (🔗
+            <a
+              target="_blank"
+              href="https://emojipedia.org/"
+              title="Emojipedia is a comprehensive resource for emoji characters, providing detailed information about their meanings, usage, and variations."
+            >
+              Emojipedia
+            </a>{" "}
+            ,{" "}
+            <a
+              target="_blank"
+              href="https://graphemica.com/"
+              title="Graphemica is a comprehensive resource for Unicode characters, providing detailed information about their meanings, usage, and variations."
+            >
+              Graphemica
+            </a>
+            )
+          </span>
           <input
             type="text"
             value={state.content}

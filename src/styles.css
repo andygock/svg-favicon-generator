@@ -13,6 +13,8 @@
   --text: #111111;
   --muted: #5f5f5f;
   --shadow: none;
+  --text-link: #0066cc;
+  --text-link-hover: #004999;
 }
 
 * {
@@ -40,8 +42,13 @@ textarea {
 }
 
 a {
-  color: inherit;
+  color: var(--text-link);
   text-decoration: none;
+}
+
+a:hover {
+  color: var(--text-link-hover);
+  text-decoration: underline;
 }
 
 .app-shell {
