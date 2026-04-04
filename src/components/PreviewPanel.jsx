@@ -1,4 +1,5 @@
 import { SnippetCard } from "./SnippetCard";
+import CopyButton from "./CopyButton";
 
 export function PreviewPanel({
   svgMarkup,
@@ -26,12 +27,9 @@ export function PreviewPanel({
                 >
                   Download
                 </button>
-                <button
-                  className="action-button"
-                  onClick={() => onCopy("SVG source", svgMarkup)}
-                >
+                <CopyButton onClick={() => onCopy("SVG source", svgMarkup)}>
                   Copy
-                </button>
+                </CopyButton>
               </>
             }
           >
@@ -47,12 +45,11 @@ export function PreviewPanel({
           <SnippetCard
             title="Inline favicon"
             actions={
-              <button
-                className="action-button"
+              <CopyButton
                 onClick={() => onCopy("inline favicon", inlineLinkMarkup)}
               >
                 Copy
-              </button>
+              </CopyButton>
             }
           >
             <textarea
@@ -67,12 +64,11 @@ export function PreviewPanel({
           <SnippetCard
             title="Head snippets"
             actions={
-              <button
-                className="action-button"
+              <CopyButton
                 onClick={() => onCopy("head snippets", defaultHeadSnippet)}
               >
                 Copy
-              </button>
+              </CopyButton>
             }
           >
             <textarea
@@ -94,12 +90,11 @@ export function PreviewPanel({
                 >
                   Download
                 </button>
-                <button
-                  className="action-button"
+                <CopyButton
                   onClick={() => onCopy("manifest JSON", defaultManifest)}
                 >
                   Copy
-                </button>
+                </CopyButton>
               </>
             }
           >

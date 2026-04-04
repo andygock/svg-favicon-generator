@@ -460,6 +460,14 @@ input[type="color"] {
   border-color: var(--text);
 }
 
+/* Ensure copy button width stays fixed to avoid layout shift when label changes */
+.copy-button {
+  min-width: 72px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .action-button:focus-visible,
 .export-tile:focus-visible {
   outline: none;
