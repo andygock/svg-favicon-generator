@@ -1,10 +1,9 @@
 {
   "name": "svg-favicon-generator",
   "version": "1.0.0",
-  "description": "Generate SVG favicons using emojis, unicode symbols, or text. Download as SVG, PNG, ICO, and get all head snippets and manifest for your site. Free, fast, open source and privacy-friendly.",
-  "main": "index.js",
+  "description": "React + Vite SVG favicon generator for emoji, unicode symbol, and text-based icons.",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --open",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -12,10 +11,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "vite": "^6.3.5"
+    "@vitejs/plugin-react": "^6.0.1",
+    "vite": "^8.0.3"
   },
   "dependencies": {
     "canvg": "^4.0.3",
-    "icojs": "^0.19.5"
+    "icojs": "^0.20.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
   }
 }
