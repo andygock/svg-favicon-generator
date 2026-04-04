@@ -12,14 +12,6 @@ export const DEFAULT_MANIFEST = `{
 }`;
 
 export const FONT_OPTIONS = [
-  //   {
-  //     label: "Roboto",
-  //     value: "Roboto, sans-serif",
-  //   },
-  //   {
-  //     label: "Roboto Mono",
-  //     value: "Roboto Mono, monospace",
-  //   },
   {
     label: "Sans Serif",
     value: "sans-serif",
@@ -74,9 +66,9 @@ export const EXPORT_OPTIONS = [
 
 export const DEFAULT_STATE = {
   content: "😊",
-  fontSize: 92,
+  fontSize: 128,
   x: 64,
-  y: 74,
+  y: 64,
   fontFamily: FONT_OPTIONS[0].value,
   fill: "#111111",
   bold: false,

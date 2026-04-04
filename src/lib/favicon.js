@@ -83,13 +83,37 @@ export function createSvgMarkup(state) {
       : `<rect x="0" y="0" width="128" height="128" fill="${bg}" />`
     : "";
 
-  // Generate a simple, standards-compliant SVG. Export code uses the
-  // browser's native rasterizer when producing PNGs so no manual
-  // vertical nudges are necessary.
+  // Generate a simple, standards-compliant SVG. Embed minimal CSS so
+  // the standalone SVG matches the in-page preview (font baseline,
+  // overflow), and center text using percentages + a small dy tweak to
+  // improve vertical alignment across renderers.
+  // Use percentage centering so exported SVG scales consistently.
+  const centerX = "50%";
+  const centerY = "50%";
+  const dy = "-0.07em"; // small vertical nudge to better match visual centering
+
+  // Allow the user X/Y controls (which are 0..128 pixel positions) to
+  // apply an additional placement offset relative to the centered
+  // baseline. Convert the absolute control values into an offset from
+  // the center (64,64) and apply via a `translate()` transform so the
+  // user-facing knobs still work as they did before.
+  const userX = sanitizeNumber(state.x, 64);
+  const userY = sanitizeNumber(state.y, 64);
+  const offsetX = userX - 64;
+  const offsetY = userY - 64;
+  const transform =
+    offsetX || offsetY ? ` transform="translate(${offsetX},${offsetY})"` : "";
+
+  // Embed a minimal style block to control baseline behavior and
+  // prevent accidental overflow differences when the SVG is viewed
+  // standalone (this mirrors the app's preview surface rules).
+  const embeddedStyle = `<style>svg{display:block}text{dominant-baseline:central;}</style>`;
+
   return [
-    `<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="${aria}">`,
+    `<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="${aria}" overflow="hidden">`,
+    embeddedStyle,
     safeBackgroundMarkup,
-    `<text x="${x}" y="${y}" dominant-baseline="middle" text-anchor="middle" font-size="${fontSize}" font-family="${fontFamily}" fill="${fill}" font-weight="${fontWeight}">${escapeXml(
+    `<text x="${centerX}" y="${centerY}"${transform} dy="${dy}" text-anchor="middle" dominant-baseline="central" font-size="${fontSize}" font-family="${fontFamily}" fill="${fill}" font-weight="${fontWeight}">${escapeXml(
       state.content,
     )}</text>`,
     `</svg>`,
