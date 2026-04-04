@@ -2,8 +2,6 @@
 
 This is a React + Vite web application that allows users to create and customize SVG favicons. Users can input text, adjust font size, position, font family, fill color, and background shape and color. The generated SVG can be downloaded or copied to the clipboard.
 
-![svg-favicon-generator](./screenshot.png)
-
 ## Features
 
 - Input text, emoji, or unicode symbol for the favicon

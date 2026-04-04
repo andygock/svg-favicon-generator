@@ -136,7 +136,7 @@ function App() {
 
   return (
     <div className="app-shell">
-      <CompactHeader />
+      <CompactHeader status={status} />
       <main className="workspace">
         <ControlPanel
           state={state}

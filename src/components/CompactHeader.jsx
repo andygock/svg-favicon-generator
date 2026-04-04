@@ -1,4 +1,4 @@
-export function CompactHeader() {
+export function CompactHeader({ status }) {
   return (
     <header className="app-header panel">
       <div className="app-header__copy">
