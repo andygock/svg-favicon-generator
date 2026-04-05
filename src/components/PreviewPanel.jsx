@@ -7,6 +7,7 @@ export function PreviewPanel({
   inlineLinkMarkup,
   status,
   defaultHeadSnippet,
+  includePwa,
   defaultManifest,
   exportOptions,
   onCopy,
@@ -80,33 +81,34 @@ export function PreviewPanel({
               spellCheck="false"
             />
           </SnippetCard>
-
-          <SnippetCard
-            title="Web manifest"
-            actions={
-              <>
-                <button
-                  className="action-button button-secondary"
-                  onClick={onDownloadManifest}
-                >
-                  Download
-                </button>
-                <CopyButton
-                  onClick={() => onCopy("manifest JSON", defaultManifest)}
-                >
-                  Copy
-                </CopyButton>
-              </>
-            }
-          >
-            <textarea
-              value={defaultManifest}
-              readOnly
-              rows="3"
-              wrap="soft"
-              spellCheck="false"
-            />
-          </SnippetCard>
+          {includePwa && (
+            <SnippetCard
+              title="Web manifest"
+              actions={
+                <>
+                  <button
+                    className="action-button button-secondary"
+                    onClick={onDownloadManifest}
+                  >
+                    Download
+                  </button>
+                  <CopyButton
+                    onClick={() => onCopy("manifest JSON", defaultManifest)}
+                  >
+                    Copy
+                  </CopyButton>
+                </>
+              }
+            >
+              <textarea
+                value={defaultManifest}
+                readOnly
+                rows="3"
+                wrap="soft"
+                spellCheck="false"
+              />
+            </SnippetCard>
+          )}
         </div>
 
         <div className="preview-stage-container">
@@ -152,7 +154,14 @@ export function PreviewPanel({
                           {option.label}
                         </span>
                       </td>
-                      <td className="asset-size">{option.size}px</td>
+                      {
+                        // if manifest is included, size should be empty string
+                        option.filename === "site.webmanifest" ? (
+                          <td className="asset-size"></td>
+                        ) : (
+                          <td className="asset-size">{option.size}px</td>
+                        )
+                      }
                     </tr>
                   ))}
                 </tbody>

@@ -296,6 +296,10 @@ textarea {
     background 120ms ease;
 }
 
+select {
+  width: max-content;
+}
+
 input[type="text"] {
   font-size: 1.5rem;
 }
@@ -312,7 +316,7 @@ textarea:focus {
 }
 
 textarea {
-  min-height: 100px;
+  min-height: 120px;
   resize: vertical;
   font-family: "Roboto Mono", monospace;
   font-size: 0.76rem;

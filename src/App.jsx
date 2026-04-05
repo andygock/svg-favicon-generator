@@ -33,6 +33,27 @@ function App() {
   );
   const svgDataUrl = useMemo(() => encodeSvgData(svgMarkup), [svgMarkup]);
 
+  const headSnippet = useMemo(() => {
+    if (state.includePwa) return DEFAULT_HEAD_SNIPPET;
+    return DEFAULT_HEAD_SNIPPET.split("\n")
+      .filter((l) => !l.includes('rel="manifest"'))
+      .join("\n");
+  }, [state.includePwa]);
+
+  const exportOptionsComputed = useMemo(() => {
+    const manifestOption = {
+      label: "site.webmanifest",
+      size: "-",
+      filename: "site.webmanifest",
+      type: "manifest",
+      accent: "ghost",
+    };
+
+    return state.includePwa
+      ? [...EXPORT_OPTIONS, manifestOption]
+      : EXPORT_OPTIONS;
+  }, [state.includePwa]);
+
   useEffect(() => {
     // Generate a PNG favicon from the live preview SVG so the browser
     // tab icon matches the rendered preview. Use devicePixelRatio to
@@ -177,6 +198,11 @@ function App() {
       return;
     }
 
+    if (option.type === "manifest") {
+      handleDownloadManifest();
+      return;
+    }
+
     try {
       if (option.type === "svg") {
         handleDownloadSvg();
@@ -315,9 +341,10 @@ function App() {
           svgMarkup={svgMarkup}
           inlineLinkMarkup={inlineLinkMarkup}
           status={status}
-          defaultHeadSnippet={DEFAULT_HEAD_SNIPPET}
+          defaultHeadSnippet={headSnippet}
+          includePwa={state.includePwa}
           defaultManifest={DEFAULT_MANIFEST}
-          exportOptions={EXPORT_OPTIONS}
+          exportOptions={exportOptionsComputed}
           onCopy={handleCopy}
           onDownloadSvg={handleDownloadSvg}
           onDownloadManifest={handleDownloadManifest}

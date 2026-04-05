@@ -6,7 +6,6 @@ export const DEFAULT_HEAD_SNIPPET = `<link rel="icon" type="image/x-icon" href="
 export const DEFAULT_MANIFEST = `{
   "icons": [
     { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192" },
-    { "src": "/icon-mask.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable" },
     { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512" }
   ]
 }`;
@@ -54,14 +53,6 @@ export const EXPORT_OPTIONS = [
     type: "png",
     accent: "secondary",
   },
-  {
-    label: "icon-mask.png",
-    size: 512,
-    filename: "icon-mask.png",
-    type: "png",
-    accent: "ghost",
-    disabled: true,
-  },
 ];
 
 export const DEFAULT_STATE = {
@@ -73,6 +64,7 @@ export const DEFAULT_STATE = {
   fill: "#111111",
   bold: false,
   useBackground: false,
+  includePwa: false,
   backgroundShape: "rect",
   background: "#ffffff",
 };

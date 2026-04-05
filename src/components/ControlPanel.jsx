@@ -79,7 +79,7 @@ export function ControlPanel({ state, fontOptions, onFieldChange }) {
 
       <section className="control-group">
         <h2 className="section-title">Typography</h2>
-        <label className="field">
+        <label className="field field-inline">
           <span className="field-label">Font family</span>
           <select
             value={state.fontFamily}
@@ -123,7 +123,7 @@ export function ControlPanel({ state, fontOptions, onFieldChange }) {
           />
         </label>
 
-        <label className="field">
+        <label className="field field-inline">
           <span className="field-label">Background shape</span>
           <select
             value={state.backgroundShape}
@@ -142,6 +142,19 @@ export function ControlPanel({ state, fontOptions, onFieldChange }) {
             value={state.background}
             onChange={onFieldChange("background")}
             disabled={!state.useBackground}
+          />
+        </label>
+      </section>
+
+      {/* toggle whether PWA, as these use additional files */}
+      <section className="control-group">
+        <h2 className="section-title">Other</h2>
+        <label className="field field-inline">
+          <span className="field-label">Include PWA assets</span>
+          <input
+            type="checkbox"
+            checked={state.includePwa}
+            onChange={onFieldChange("includePwa")}
           />
         </label>
       </section>
