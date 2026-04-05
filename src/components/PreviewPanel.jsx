@@ -14,6 +14,8 @@ export function PreviewPanel({
   onDownloadSvg,
   onDownloadManifest,
   onExport,
+  onDownloadAll,
+  downloadAllLoading,
 }) {
   return (
     <section className="panel preview-panel">
@@ -166,6 +168,16 @@ export function PreviewPanel({
                   ))}
                 </tbody>
               </table>
+            </div>
+            <div className="export-actions" style={{ marginTop: 12 }}>
+              <button
+                className="action-button button-primary"
+                onClick={onDownloadAll}
+                aria-label="Download all visible assets"
+                disabled={!!downloadAllLoading}
+              >
+                {downloadAllLoading ? "Loading..." : "Download all"}
+              </button>
             </div>
           </article>
         </div>

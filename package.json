@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "dompurify": "^3.3.3",
+    "fflate": "^0.8.2",
     "icojs": "^0.20.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"

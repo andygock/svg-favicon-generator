@@ -11,6 +11,9 @@ importers:
       dompurify:
         specifier: ^3.3.3
         version: 3.3.3
+      fflate:
+        specifier: ^0.8.2
+        version: 0.8.2
       icojs:
         specifier: ^0.20.1
         version: 0.20.1(@jimp/custom@0.22.12)
@@ -251,6 +254,9 @@ packages:
     peerDependenciesMeta:
       picomatch:
         optional: true
+
+  fflate@0.8.2:
+    resolution: {integrity: sha512-cPJU47OaAoCbg0pBvzsgpTPhmhqI5eJjh/JIu8tPj5q+T7iLvW/JAYUqmE7KOB4R1ZyEhzBaIQpQpardBF5z8A==}
 
   file-type@16.5.4:
     resolution: {integrity: sha512-/yFHK0aGjFEgDJjEKP0pWCplsPFPhwyfwevf/pVxiN0tmE4L9LmwWxWukdJSHdoCli4VgQLehjJtwQBnqmsKcw==}
@@ -712,6 +718,8 @@ snapshots:
   fdir@6.5.0(picomatch@4.0.4):
     optionalDependencies:
       picomatch: 4.0.4
+
+  fflate@0.8.2: {}
 
   file-type@16.5.4:
     dependencies:

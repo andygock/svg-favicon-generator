@@ -25,6 +25,7 @@ import {
 function App() {
   const [state, setState] = useState(DEFAULT_STATE);
   const [status, setStatus] = useState(DEFAULT_STATUS);
+  const [downloadAllLoading, setDownloadAllLoading] = useState(false);
 
   const svgMarkup = useMemo(() => createSvgMarkup(state), [state]);
   const inlineLinkMarkup = useMemo(
@@ -327,6 +328,100 @@ function App() {
     }
   };
 
+  const handleDownloadAll = async () => {
+    notify("Preparing download...");
+    setDownloadAllLoading(true);
+    try {
+      const files = {};
+      const enc = new TextEncoder();
+
+      // Core text assets
+      files["icon.svg"] = enc.encode(svgMarkup);
+      files["inline-favicon.txt"] = enc.encode(inlineLinkMarkup);
+      files["head-snippet.txt"] = enc.encode(headSnippet);
+      if (state.includePwa) {
+        files["site.webmanifest"] = enc.encode(DEFAULT_MANIFEST);
+      }
+
+      // Rasterized assets (png / ico) from export options
+      for (const option of exportOptionsComputed) {
+        if (option.disabled) continue;
+        if (option.type === "svg" || option.type === "manifest") continue;
+
+        const exportMarkup = svgMarkup
+          .replace('width="128"', `width="${option.size}"`)
+          .replace('height="128"', `height="${option.size}"`);
+
+        const svgBlob = new Blob([exportMarkup], {
+          type: "image/svg+xml;charset=utf-8",
+        });
+        const url = URL.createObjectURL(svgBlob);
+
+        try {
+          await new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = async () => {
+              try {
+                const canvas = document.createElement("canvas");
+                canvas.width = option.size;
+                canvas.height = option.size;
+                const ctx = canvas.getContext("2d");
+                if (!ctx) throw new Error("Canvas unavailable");
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                const pngBlob = await canvasToBlob(canvas, "image/png");
+                if (!pngBlob) throw new Error("Unable to create PNG");
+
+                if (option.type === "png") {
+                  const ab = await pngBlob.arrayBuffer();
+                  files[option.filename] = new Uint8Array(ab);
+                  resolve();
+                } else if (option.type === "ico") {
+                  const icoBlob = await createIcoBlobFromPngBlob(
+                    pngBlob,
+                    option.size,
+                  );
+                  const ab = await icoBlob.arrayBuffer();
+                  files[option.filename] = new Uint8Array(ab);
+                  resolve();
+                } else {
+                  resolve();
+                }
+              } catch (err) {
+                reject(err);
+              }
+            };
+            img.onerror = () => reject(new Error("Failed to load SVG image."));
+            img.src = url;
+          });
+        } finally {
+          try {
+            URL.revokeObjectURL(url);
+          } catch (e) {
+            // ignore
+          }
+        }
+      }
+
+      // Load fflate only when needed and create a high-compression zip
+      const { zipSync } = await import("fflate");
+      const zipData = zipSync(files, { level: 9 });
+      const zipBlob = new Blob([zipData], { type: "application/zip" });
+
+      // Default filename should be {content}.zip; fall back to 'content'
+      const safeName = (state.content || "content").replace(/\s+/g, "-");
+      const filename = `${safeName}.zip`;
+      downloadBlob(zipBlob, filename);
+      notify(`Downloaded ${filename}.`);
+    } catch (err) {
+      console.error(err);
+      notify("Could not create package.");
+    } finally {
+      setDownloadAllLoading(false);
+    }
+  };
+
   return (
     <div className="app-shell">
       <CompactHeader status={status} />
@@ -349,6 +444,8 @@ function App() {
           onDownloadSvg={handleDownloadSvg}
           onDownloadManifest={handleDownloadManifest}
           onExport={handleExport}
+          onDownloadAll={handleDownloadAll}
+          downloadAllLoading={downloadAllLoading}
         />
       </main>
       <Footer />
