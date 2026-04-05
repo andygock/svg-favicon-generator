@@ -69,30 +69,15 @@ a:hover {
 .app-header {
   display: flex;
   align-items: baseline;
-  justify-content: space-between;
+  justify-content: center;
   gap: 8px;
   padding: 8px 10px;
-  /* margin-bottom: 8px; */
-}
-
-.app-header__copy {
-  display: grid;
-  gap: 4px;
-}
-
-.app-header__kicker {
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
 }
 
 .app-header h1 {
   margin: 0;
   font-size: 0.95rem;
   line-height: 1.2;
-  font-weight: 700;
 }
 
 .workspace {
