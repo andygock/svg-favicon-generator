@@ -22,6 +22,8 @@ async function run() {
   };
 
   const svg = createSvgMarkup(maliciousState);
+  console.log("Generated SVG:");
+  console.log(svg);
 
   if (svg.includes("onload") || svg.includes("javascript:")) {
     console.error("Sanitization failed: found unsafe tokens in SVG");
