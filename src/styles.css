@@ -322,9 +322,10 @@ select {
   width: max-content;
 }
 
+/* 
 input[type="text"] {
   font-size: 1.5rem;
-}
+} */
 
 input[type="text"]::placeholder,
 textarea::placeholder {
