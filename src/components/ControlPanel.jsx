@@ -1,4 +1,9 @@
+import React, { useState } from "react";
+import { EmojiPicker } from "./EmojiPicker";
+
 export function ControlPanel({ state, fontOptions, onFieldChange }) {
+  const [lastCopied, setLastCopied] = useState("Nothing copied yet");
+
   return (
     <aside className="panel controls-panel">
       <section className="control-group">
@@ -23,12 +28,33 @@ export function ControlPanel({ state, fontOptions, onFieldChange }) {
             </a>
             )
           </span>
-          <input
-            type="text"
-            value={state.content}
-            placeholder="Enter a letter or symbol"
-            onChange={onFieldChange("content")}
-          />
+          <div className="field-input field-input-emoji-picker">
+            <input
+              type="text"
+              value={state.content}
+              placeholder="Enter a letter or symbol"
+              onChange={onFieldChange("content")}
+            />
+            <EmojiPicker
+              config={{
+                maxResults: 96,
+                displayMode: "emoji-only",
+                triggerLabel: "🔎",
+                modalTitle: "Emoji picker",
+                placeholder: "Search: e.g smile, sad, heart",
+              }}
+              onCopy={({ copiedText, name }) =>
+                setLastCopied(`Copied ${copiedText} (${name})`)
+              }
+              onSelect={(item) => {
+                // Insert the picked emoji into the glyph input by calling
+                // the parent's onFieldChange handler for `content`.
+                const setContent = onFieldChange("content");
+                setContent({ target: { value: item.emoji, type: "text" } });
+                setLastCopied(`Copied ${item.emoji} (${item.name})`);
+              }}
+            />
+          </div>
         </label>
 
         <label className="field field-range">
