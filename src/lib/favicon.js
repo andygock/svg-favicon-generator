@@ -219,9 +219,6 @@ export async function copyText(text) {
   try {
     const result = document.execCommand("copy");
     return !!result;
-  } catch (err) {
-    // Rethrow so callers can handle/display the error
-    throw err;
   } finally {
     // Clean up the temporary element
     textarea.remove();

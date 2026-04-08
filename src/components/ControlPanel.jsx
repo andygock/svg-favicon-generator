@@ -13,6 +13,7 @@ export function ControlPanel({ state, fontOptions, onFieldChange }) {
             Content (🔗
             <a
               target="_blank"
+              rel="noopener noreferrer"
               href="https://emojipedia.org/"
               title="Emojipedia is a comprehensive resource for emoji characters, providing detailed information about their meanings, usage, and variations."
             >
@@ -21,6 +22,7 @@ export function ControlPanel({ state, fontOptions, onFieldChange }) {
             ,{" "}
             <a
               target="_blank"
+              rel="noopener noreferrer"
               href="https://graphemica.com/"
               title="Graphemica is a comprehensive resource for Unicode characters, providing detailed information about their meanings, usage, and variations."
             >
