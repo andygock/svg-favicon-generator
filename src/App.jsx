@@ -50,9 +50,17 @@ function App() {
       accent: "ghost",
     };
 
-    return state.includePwa
-      ? [...EXPORT_OPTIONS, manifestOption]
-      : EXPORT_OPTIONS;
+    // When PWA is disabled, exclude the PWA-only PNG assets
+    const filtered = EXPORT_OPTIONS.filter((opt) => {
+      if (!state.includePwa) {
+        return (
+          opt.filename !== "icon-192.png" && opt.filename !== "icon-512.png"
+        );
+      }
+      return true;
+    });
+
+    return state.includePwa ? [...filtered, manifestOption] : filtered;
   }, [state.includePwa]);
 
   useEffect(() => {

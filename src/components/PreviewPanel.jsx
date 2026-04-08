@@ -28,7 +28,7 @@ export function PreviewPanel({
                   className="action-button button-secondary"
                   onClick={onDownloadSvg}
                 >
-                  Download
+                  Download SVG
                 </button>
                 <CopyButton onClick={() => onCopy("SVG source", svgMarkup)}>
                   Copy
@@ -67,11 +67,13 @@ export function PreviewPanel({
           <SnippetCard
             title="Head snippets"
             actions={
-              <CopyButton
-                onClick={() => onCopy("head snippets", defaultHeadSnippet)}
-              >
-                Copy
-              </CopyButton>
+              <>
+                <CopyButton
+                  onClick={() => onCopy("head snippets", defaultHeadSnippet)}
+                >
+                  Copy
+                </CopyButton>
+              </>
             }
           >
             <textarea
