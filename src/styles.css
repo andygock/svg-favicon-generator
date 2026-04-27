@@ -72,15 +72,20 @@ a:hover {
 .app-header {
   display: flex;
   align-items: baseline;
-  justify-content: center;
+  justify-content: space-between;
   gap: 8px;
-  padding: 8px 10px;
+  padding: 0 10px;
 }
 
-.app-header h1 {
+.app-title {
   margin: 0;
   font-size: 0.95rem;
   line-height: 1.2;
+}
+
+.app-status {
+  margin-left: auto;
+  text-align: right;
 }
 
 .workspace {
@@ -189,7 +194,6 @@ a:hover {
 
 .export-table tbody tr:hover {
   background-color: var(--panel-soft);
-  cursor: pointer;
 }
 
 .export-table .asset-size {
@@ -205,21 +209,66 @@ a:hover {
   cursor: not-allowed;
 }
 
-.table-action-button {
-  padding: 0.2rem 0.6rem;
-  border-radius: 3px;
-  background: var(--panel-soft);
-  border: 1px solid var(--border);
+.asset-link {
+  appearance: none;
+  display: inline;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
   cursor: pointer;
-  font-size: 0.68rem;
-  font-weight: 600;
-  transition: all 150ms ease;
 }
 
-.table-action-button:hover:not(:disabled) {
+.asset-link:hover:not(:disabled) {
+  color: var(--text);
+}
+
+.asset-link:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}
+
+.asset-link:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration-color: currentColor;
+}
+
+.download-all-link {
+  font-size: 0.74rem;
+  font-weight: 600;
+}
+
+.download-all-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
   background: var(--text);
   color: #fff;
-  border-color: var(--text);
+  cursor: pointer;
+  font-size: 0.74rem;
+  font-weight: 700;
+  transition:
+    background 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease;
+}
+
+.download-all-button:hover:not(:disabled) {
+  background: #000;
+  border-color: #000;
+}
+
+.download-all-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 @media (max-width: 800px) {

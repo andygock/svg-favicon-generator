@@ -178,6 +178,27 @@ function App() {
     setStatus(message);
   };
 
+  // Keep downloaded package names filesystem-safe across Windows, macOS,
+  // and Linux. The source glyph can contain characters that are legal in the
+  // SVG preview but invalid or awkward in filenames, so we normalize and
+  // strip the common forbidden cases before adding the .zip extension.
+  const sanitizeFilenameBase = (value, fallback = "content") => {
+    const forbidden = '<>:"/\\|?*';
+    const cleaned = Array.from(String(value ?? "").normalize("NFKD"))
+      .filter((character) => {
+        const code = character.charCodeAt(0);
+        return code >= 32 && code !== 127 && !forbidden.includes(character);
+      })
+      .join("")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^\.+/, "")
+      .replace(/^-+|-+$/g, "")
+      .trim();
+
+    return cleaned || fallback;
+  };
+
   const handleCopy = async (label, text) => {
     try {
       await copyText(text);
@@ -418,7 +439,7 @@ function App() {
       const zipBlob = new Blob([zipData], { type: "application/zip" });
 
       // Default filename should be {content}.zip; fall back to 'content'
-      const safeName = (state.content || "content").replace(/\s+/g, "-");
+      const safeName = sanitizeFilenameBase(state.content);
       const filename = `${safeName}.zip`;
       downloadBlob(zipBlob, filename);
       notify(`Downloaded ${filename}.`);
@@ -443,7 +464,6 @@ function App() {
         <PreviewPanel
           svgMarkup={svgMarkup}
           inlineLinkMarkup={inlineLinkMarkup}
-          status={status}
           defaultHeadSnippet={headSnippet}
           includePwa={state.includePwa}
           defaultManifest={DEFAULT_MANIFEST}

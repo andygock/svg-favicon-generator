@@ -4,7 +4,6 @@ import CopyButton from "./CopyButton";
 export function PreviewPanel({
   svgMarkup,
   inlineLinkMarkup,
-  status,
   defaultHeadSnippet,
   includePwa,
   defaultManifest,
@@ -139,19 +138,20 @@ export function PreviewPanel({
                     <tr
                       key={option.filename}
                       className={option.disabled ? "disabled" : ""}
-                      onClick={() => {
-                        if (option.disabled) return;
-                        onExport(option);
-                      }}
                     >
                       <td className="asset-name">
-                        <span
-                          className="asset-name-button"
+                        <button
                           type="button"
+                          className="asset-link"
+                          onClick={() => {
+                            if (option.disabled) return;
+                            onExport(option);
+                          }}
+                          disabled={option.disabled}
                           aria-label={`Download ${option.label}`}
                         >
                           {option.label}
-                        </span>
+                        </button>
                       </td>
                       {
                         // if manifest is included, size should be empty string
@@ -168,7 +168,7 @@ export function PreviewPanel({
             </div>
             <div className="export-actions" style={{ marginTop: 12 }}>
               <button
-                className="action-button button-primary"
+                className="action-button button-primary download-all-button"
                 onClick={onDownloadAll}
                 aria-label="Download all visible assets"
                 disabled={!!downloadAllLoading}
